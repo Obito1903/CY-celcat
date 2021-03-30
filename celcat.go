@@ -152,9 +152,10 @@ func parseDescription(desc string, category string) (string, string, string) {
 		module, location, prof = "férié", "", ""
 	} else {
 		module = html.UnescapeString(strings.Trim(parsed[1], "\r\n"))
-		for i := 2; i < len(parsed); i++ {
-			location = location + strings.Trim(parsed[i], "\r\n")
+		for i := 2; i < len(parsed)-1; i++ {
+			location = location + " " + strings.Trim(parsed[i], "\r\n")
 		}
+		location = html.UnescapeString(location)
 		prof = strings.Trim(parsed[len(parsed)-1], "\r\n")
 	}
 
@@ -176,7 +177,7 @@ func parseCalEvent(baseEvent interface{}) CalEvent {
 	startDate := fmt.Sprintf("%s", mappedCelcatEvent["start"])
 	parsedEvent.start, _ = time.ParseInLocation("2006-01-02T15:04:05", startDate, loc)
 
-	endDate := fmt.Sprintf("%s", mappedCelcatEvent["start"])
+	endDate := fmt.Sprintf("%s", mappedCelcatEvent["end"])
 	parsedEvent.end, _ = time.ParseInLocation("2006-01-02T15:04:05", endDate, loc)
 
 	return parsedEvent
