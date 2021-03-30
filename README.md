@@ -21,9 +21,9 @@ go build ./celcat.go
 
 ## Utilisation
 
-Premierement il faut mettre vos identifiant celcat dans le fichier `config.json`
+Premièrement il faut mettre vos identifiant Celcat dans le fichier `config.json`
 
-une fois que c'est fait il vous suffit d'executer le programme pour obtenir un fichier `data.ics` qui pourra etre importé dans n'importe quel gestionnaire d'agenda.
+une fois que c'est fait il vous suffit d'exécuter le programme pour obtenir un fichier `data.ics` qui pourra être importé dans n'importe quel gestionnaire d'agenda.
 
 ### windows
 
@@ -41,7 +41,7 @@ une fois que c'est fait il vous suffit d'executer le programme pour obtenir un f
 
 #### Fichier de config different
 
-Il est possible de spécifier un fichier de configuration (doit etre dans le meme dossier, flemme de me faire chier a parse les espaces dans les argument)
+Il est possible de spécifier un fichier de configuration (doit être dans le même dossier, flemme de me faire chier a parse les espaces dans les arguments)
 
 ```sh
 ./celcat -c example.config.json
@@ -49,7 +49,7 @@ Il est possible de spécifier un fichier de configuration (doit etre dans le mem
 
 #### Récuperer l'agenda sur une période différente
 
-Vous pouvez aussi spécifier la période sur laquel récuperer l'agenda
+Vous pouvez aussi spécifier la période sur laquelle récupérer l'agenda
 
 ```sh
 ./celcat -d 2021-03-30 2021-04-30
