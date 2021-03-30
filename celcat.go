@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"html"
 	"io"
@@ -30,8 +31,9 @@ type CalEvent struct {
 }
 
 type SessionData struct {
-	token       string
-	Antiforgery *http.Cookie
+	token         string
+	Antiforgery   *http.Cookie
+	federationIds string
 }
 
 type Config struct {
@@ -106,7 +108,12 @@ func logon(client *http.Client, session SessionData, config Config) SessionData 
 	// Send the login request
 	resp, err := client.Do(req)
 	checkErr(err)
-	fmt.Println(resp.StatusCode)
+	if resp.StatusCode != 200 {
+		checkErr(errors.New(fmt.Sprint(resp.StatusCode) + ": Request Error"))
+	}
+	responseUrl, err := resp.Request.Response.Location()
+	checkErr(err)
+	session.federationIds = responseUrl.Query().Get("FederationIds")
 	return session
 }
 
@@ -121,7 +128,7 @@ func getCalData(client *http.Client, session SessionData, queryPeriod Period) []
 		"end":             {queryPeriod.endDate.Format("2006-01-02")},
 		"resType":         {"104"},
 		"calView":         {"agendaWeek"},
-		"federationIds[]": {"22014815"},
+		"federationIds[]": {session.federationIds},
 	}
 	// Send request with cookies from the cookieJar
 	resp, err := client.PostForm("https://services-web.u-cergy.fr/calendar/Home/GetCalendarData", headerData)
