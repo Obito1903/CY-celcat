@@ -37,7 +37,7 @@ func main() {
 	firstDayofWeek := firstDayOfISOWeek(time.UTC)
 	queryPeriod := common.Period{
 		StartDate: firstDayofWeek,
-		EndDate:   firstDayofWeek.Add(time.Hour * 24 * 6),
+		EndDate:   firstDayofWeek.Add(time.Hour * 24 * 30),
 	}
 
 	for i, arg := range os.Args {
@@ -57,6 +57,10 @@ func main() {
 			common.CheckErr(err)
 		case "-svg":
 			genSVG = true
+			queryPeriod = common.Period{
+				StartDate: firstDayofWeek,
+				EndDate:   firstDayofWeek.Add(time.Hour * 24 * 6),
+			}
 			if len(os.Args) < i+2 {
 
 			} else {

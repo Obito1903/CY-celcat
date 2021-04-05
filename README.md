@@ -1,4 +1,4 @@
-# CYtech Celcat to ICS
+# CYtech Celcat
 
 ## build
 
@@ -38,6 +38,14 @@ une fois que c'est fait il vous suffit d'exécuter le programme pour obtenir un 
 ```
 
 ### Parametres
+
+#### Generer un fichier SVG
+
+Il est possible de generer un fichier SVG de la semaine actuel pour cela il suffit d'ajouter l'argument `-svg`, Le nom du fichier de sortie peut etre specifié si besoin
+
+```sh
+./celcat -svg classe1.svg
+```
 
 #### Fichier de config different
 
