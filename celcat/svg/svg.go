@@ -21,7 +21,7 @@ func makeGrid(canvas *svg.SVG, width int, height int) int {
 	currentTimeLine := time.Date(2021, 1, 1, 8, 0, 0, 0, time.UTC)
 	gapBetweenLine, _ := time.ParseDuration("30m")
 	for i := 0; i < 22; i++ {
-		canvas.Text(0, (timeLineHeight)*i+60, fmt.Sprintf("%dh%02d", currentTimeLine.Hour(), currentTimeLine.Minute()), "font-family:Roboto;fill:white;font-size:20px")
+		canvas.Text(0, (timeLineHeight)*i+60, fmt.Sprintf("%dh%02d", currentTimeLine.Hour(), currentTimeLine.Minute()), "font-size:21px;font-family:Roboto;fill:white;font-size:20px")
 		canvas.Line(0, (timeLineHeight)*i+40, width, (timeLineHeight)*i+40, "stroke:white")
 		currentTimeLine = currentTimeLine.Add(gapBetweenLine)
 	}
@@ -33,11 +33,11 @@ func colorEvent(eventType string) string {
 
 	switch eventType {
 	case "TD":
-		color = "blue"
+		color = "#10A4C4"
 	case "TP":
 		color = "teal"
 	case "CM":
-		color = "red"
+		color = "#F04747"
 	case "Examens":
 		color = "purple"
 	case "Tiers temps":
@@ -58,14 +58,14 @@ func addEvent(canvas *svg.SVG, width int, height int, eventWidth int, event comm
 	StartX := (width / 25) + (int(event.Start.Weekday())-1)*eventWidth + 5
 	canvas.Roundrect(StartX, StartY, eventWidth-10, eventHeight, 5, 5, "stroke:"+colorEvent(event.Category)+";stroke-width:3;fill:#32353B")
 
-	canvas.Text(StartX+8, StartY+20, event.Module, "font-family:Roboto;fill:white")
-	canvas.Text(StartX+8, StartY+38, event.Prof, "font-family:Roboto;fill:green")
+	canvas.Text(StartX+8, StartY+24, event.Module, "font-size:21px;font-family:Roboto;fill:white")
+	canvas.Text(StartX+8, StartY+48, event.Prof, "font-size:21px;font-family:Roboto;fill:#40AD7B")
 
 	startTimeStr := fmt.Sprintf("%02dh%02d", event.Start.Hour(), event.Start.Minute())
-	canvas.Text(StartX+eventWidth-len(startTimeStr)*13, StartY+22, startTimeStr, "font-family:Roboto;fill:white")
+	canvas.Text(StartX+eventWidth-len(startTimeStr)*13-18, StartY+22, startTimeStr, "font-size:20px;font-family:Roboto;fill:white")
 
 	endTimeStr := fmt.Sprintf("%02dh%02d", event.End.Hour(), event.End.Minute())
-	canvas.Text(StartX+eventWidth-len(startTimeStr)*13, StartY+eventHeight-10, endTimeStr, "font-family:Roboto;fill:white")
+	canvas.Text(StartX+eventWidth-len(startTimeStr)*13-18, StartY+eventHeight-8, endTimeStr, "font-size:20px;font-family:Roboto;fill:white")
 
 }
 
