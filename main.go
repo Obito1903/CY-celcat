@@ -4,6 +4,7 @@ import (
 	"log"
 	"os"
 	"time"
+	"fmt"
 
 	"github.com/Obito1903/CY-celcat/celcat"
 	"github.com/Obito1903/CY-celcat/celcat/common"
@@ -14,6 +15,10 @@ func firstDayOfISOWeek(timezone *time.Location) time.Time {
 	year, week := time.Now().ISOWeek()
 	date := time.Date(year, 0, 0, 0, 0, 0, 0, timezone)
 	isoYear, isoWeek := date.ISOWeek()
+	if time.Now().Weekday() == time.Saturday || time.Now().Weekday() == time.Sunday {
+		fmt.Println("bingo!")
+		week = week + 1
+	}
 	for date.Weekday() != time.Monday { // iterate back to Monday
 		date = date.AddDate(0, 0, -1)
 		isoYear, isoWeek = date.ISOWeek()
