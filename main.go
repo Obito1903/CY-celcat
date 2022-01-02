@@ -1,10 +1,10 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
-	"fmt"
 
 	"github.com/Obito1903/CY-celcat/celcat"
 	"github.com/Obito1903/CY-celcat/celcat/common"
@@ -24,6 +24,7 @@ func firstDayOfISOWeek(timezone *time.Location) time.Time {
 		isoYear, isoWeek = date.ISOWeek()
 	}
 	for isoYear < year { // iterate forward to the first day of the first week
+
 		date = date.AddDate(0, 0, 1)
 		isoYear, isoWeek = date.ISOWeek()
 	}
