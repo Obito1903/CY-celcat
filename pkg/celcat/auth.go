@@ -14,7 +14,7 @@ func getRequestVerificationToken(client *http.Client, url url.URL) string {
 	// Send a request to the celcat app
 	resp, err := client.Get(url.String() + "/LdapLogin")
 	if err != nil {
-		log.Fatal("Could not get the Request Verification Token from ", url, err)
+		log.Fatal("Could not get the Request Verification Token from ", url.String(), err)
 		os.Exit(1)
 	}
 
@@ -34,6 +34,37 @@ func getRequestVerificationToken(client *http.Client, url url.URL) string {
 }
 
 // Log in the specified user into the given client
-func Login(client *http.Client, url url.URL, username string, password string) {
-	getRequestVerificationToken(client, url)
+func Login(client *http.Client, celcatUrl url.URL, username string, password string) SessionData {
+	var session SessionData
+	session.token = getRequestVerificationToken(client, celcatUrl)
+	session.location = celcatUrl
+
+	// Init the header to be sent
+	formData := url.Values{
+		"Name":                       {username},
+		"Password":                   {password},
+		"__RequestVerificationToken": {session.token},
+	}
+	// Setup a login request
+	req, err := http.NewRequest("POST", celcatUrl.String()+"/LdapLogin/Logon", strings.NewReader(formData.Encode()))
+	if err != nil {
+		log.Fatal("Could not create request.", err)
+		os.Exit(1)
+	}
+	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+
+	// Send the login request
+	resp, err := client.Do(req)
+
+	if err != nil || resp.StatusCode != 200 {
+		log.Fatal("Could not login to : ", celcatUrl.String(), err)
+		os.Exit(1)
+	}
+	responseUrl, err := resp.Request.Response.Location()
+	if err != nil {
+		log.Fatal("Could not parse response.", err)
+		os.Exit(1)
+	}
+	session.federationId = responseUrl.Query().Get("FederationIds")
+	return session
 }

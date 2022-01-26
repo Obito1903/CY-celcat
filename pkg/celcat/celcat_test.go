@@ -23,3 +23,20 @@ func TestRequestToken(t *testing.T) {
 	}
 	t.Log("Token: " + getRequestVerificationToken(client, *url))
 }
+
+func TestLogin(t *testing.T) {
+	jar, err := cookiejar.New(nil)
+	if err != nil {
+		os.Exit(1)
+	}
+
+	client := &http.Client{
+		Jar: jar,
+	}
+	url, err := url.Parse("https://services-web.u-cergy.fr/calendar")
+	if err != nil {
+		os.Exit(1)
+	}
+	data := Login(client, *url, "", "")
+	t.Log("Token : " + data.token + " | Id : " + data.federationId)
+}
