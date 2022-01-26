@@ -44,7 +44,7 @@ func TestLogin(t *testing.T) {
 		os.Exit(1)
 	}
 	data := Login(client, *url, config.UserName, config.UserPassword)
-	t.Log("Token : " + data.token + " | Id : " + data.federationId)
+	t.Log("Token : " + data.token + " | Id : " + data.FederationId)
 }
 
 func TestCalendar(t *testing.T) {
@@ -64,8 +64,8 @@ func TestCalendar(t *testing.T) {
 	}
 	data := Login(client, *url, config.UserName, config.UserPassword)
 
-	events := getEventList(client, *url, data.federationId, time.Date(2022, 01, 24, 0, 0, 0, 0, time.Local), time.Date(2022, 01, 25, 0, 0, 0, 0, time.Local))
-	t.Log("Loged as : ", data.federationId)
+	events := getEventList(client, *url, data.FederationId, time.Date(2022, 01, 24, 0, 0, 0, 0, time.Local), time.Date(2022, 01, 25, 0, 0, 0, 0, time.Local))
+	t.Log("Loged as : ", data.FederationId)
 	for _, event := range events {
 		t.Log(event.Id, "| Start : ", event.Start, ", End : ", event.End)
 	}
@@ -88,8 +88,8 @@ func TestEventDetails(t *testing.T) {
 	}
 	data := Login(client, *url, config.UserName, config.UserPassword)
 
-	events := getEventList(client, *url, data.federationId, time.Date(2022, 01, 24, 0, 0, 0, 0, time.Local), time.Date(2022, 01, 25, 0, 0, 0, 0, time.Local))
-	t.Log("Loged as : ", data.federationId)
+	events := getEventList(client, *url, data.FederationId, time.Date(2022, 01, 24, 0, 0, 0, 0, time.Local), time.Date(2022, 01, 25, 0, 0, 0, 0, time.Local))
+	t.Log("Loged as : ", data.FederationId)
 	for _, event := range events {
 		getEventDetails(client, *url, &event)
 		t.Log(event.Id, "| Start : ", event.Start, ", End : ", event.End)

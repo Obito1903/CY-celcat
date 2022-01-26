@@ -11,7 +11,7 @@ import (
 
 type SessionData struct {
 	token        string
-	federationId string
+	FederationId string
 	location     url.URL
 }
 
@@ -22,15 +22,15 @@ type SessionData struct {
 // 	AllDay bool   `json:"allDay"`
 // }
 
-type celcatCalEvent struct {
+type CelcatCalEvent struct {
 	Id       string               `json:"id"`
 	Start    string               `json:"start"`
 	End      string               `json:"end"`
 	AllDay   bool                 `json:"allDay"`
-	Elements []celcatEventElement `json:"elements"`
+	Elements []CelcatEventElement `json:"elements"`
 }
 
-type celcatEventElement struct {
+type CelcatEventElement struct {
 	Label             string `json:"label"`
 	Content           string `json:"content"`
 	EntityType        int    `json:"entityType"`
@@ -38,7 +38,7 @@ type celcatEventElement struct {
 }
 
 // Query the event list from celcat
-func getEventList(client *http.Client, celcatUrl url.URL, groupeId string, start time.Time, end time.Time) []celcatCalEvent {
+func getEventList(client *http.Client, celcatUrl url.URL, groupeId string, start time.Time, end time.Time) []CelcatCalEvent {
 	headerData := url.Values{
 		"start":           {start.Format("2006-01-02")},
 		"end":             {end.Format("2006-01-02")},
@@ -54,7 +54,7 @@ func getEventList(client *http.Client, celcatUrl url.URL, groupeId string, start
 	if err != nil || resp.StatusCode != 200 {
 		log.Fatal(err)
 	}
-	var celcatEventList []celcatCalEvent
+	var celcatEventList []CelcatCalEvent
 	err = json.Unmarshal(body, &celcatEventList)
 	if err != nil || resp.StatusCode != 200 {
 		log.Fatal("Could not parse calendar data : ", celcatUrl.String(), err)
@@ -62,7 +62,7 @@ func getEventList(client *http.Client, celcatUrl url.URL, groupeId string, start
 	return celcatEventList
 }
 
-func getEventDetails(client *http.Client, celcatUrl url.URL, event *celcatCalEvent) {
+func getEventDetails(client *http.Client, celcatUrl url.URL, event *CelcatCalEvent) {
 	headerData := url.Values{
 		"eventId": {event.Id},
 	}
@@ -80,10 +80,10 @@ func getEventDetails(client *http.Client, celcatUrl url.URL, event *celcatCalEve
 	}
 }
 
-func GetCalendar(client *http.Client, celcatUrl url.URL, groupeId string, start time.Time, end time.Time) []celcatCalEvent {
+func GetCalendar(client *http.Client, celcatUrl url.URL, groupeId string, start time.Time, end time.Time) []CelcatCalEvent {
 	events := getEventList(client, celcatUrl, groupeId, start, end)
-	for _, event := range events {
-		getEventDetails(client, celcatUrl, &event)
+	for idx := range events {
+		getEventDetails(client, celcatUrl, &events[idx])
 	}
 	return events
 }

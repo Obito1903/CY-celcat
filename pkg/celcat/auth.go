@@ -60,6 +60,6 @@ func Login(client *http.Client, celcatUrl url.URL, username string, password str
 	}
 	defer resp.Body.Close()
 	responseUrl, err := resp.Request.Response.Location()
-	session.federationId = responseUrl.Query().Get("FederationIds")
+	session.FederationId = responseUrl.Query().Get("FederationIds")
 	return session
 }
