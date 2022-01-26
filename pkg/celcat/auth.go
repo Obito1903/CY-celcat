@@ -17,7 +17,6 @@ func getRequestVerificationToken(client *http.Client, url url.URL) string {
 		log.Fatal("Could not get the Request Verification Token from ", url.String(), err)
 		os.Exit(1)
 	}
-	// client.Jar.SetCookies(&url, resp.Cookies())
 
 	// Init the scanner
 	scanner := bufio.NewScanner(resp.Body)
@@ -56,9 +55,6 @@ func Login(client *http.Client, celcatUrl url.URL, username string, password str
 	}
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
-	// for _, cookie := range client.Jar.Cookies(&celcatUrl) {
-	// 	req.AddCookie(cookie)
-	// }
 
 	// Send the login request
 	resp, err := client.Do(req)
