@@ -5,7 +5,6 @@ import (
 	"log"
 	"net/http"
 	"net/url"
-	"os"
 	"strings"
 )
 
@@ -15,7 +14,6 @@ func getRequestVerificationToken(client *http.Client, url url.URL) string {
 	resp, err := client.Get(url.String() + "/LdapLogin")
 	if err != nil {
 		log.Fatal("Could not get the Request Verification Token from ", url.String(), err)
-		os.Exit(1)
 	}
 
 	// Init the scanner
@@ -51,7 +49,6 @@ func Login(client *http.Client, celcatUrl url.URL, username string, password str
 	req, err := http.NewRequest("POST", celcatUrl.String()+"/LdapLogin/Logon", strings.NewReader(formData.Encode()))
 	if err != nil {
 		log.Fatal("Could not create request.", err)
-		os.Exit(1)
 	}
 
 	req.Header.Set("Content-Type", "application/x-www-form-urlencoded")
@@ -60,7 +57,6 @@ func Login(client *http.Client, celcatUrl url.URL, username string, password str
 	resp, err := client.Do(req)
 	if err != nil || resp.StatusCode != 200 || len(client.Jar.Cookies(&celcatUrl)) < 2 {
 		log.Fatal("Could not login to, check your login and password : ", celcatUrl.String())
-		os.Exit(1)
 	}
 	defer resp.Body.Close()
 	responseUrl, err := resp.Request.Response.Location()
