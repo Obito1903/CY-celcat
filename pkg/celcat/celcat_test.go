@@ -34,12 +34,10 @@ func TestLogin(t *testing.T) {
 		Jar: jar,
 	}
 	url, err := url.Parse("https://services-web.u-cergy.fr/calendar")
-	t.Log("Salut")
 	if err != nil {
 		t.Log("Hello")
 		os.Exit(1)
 	}
-	t.Log("Salut2")
 	data := Login(client, *url, "", "")
 	t.Log("Token : " + data.token + " | Id : " + data.federationId)
 }
