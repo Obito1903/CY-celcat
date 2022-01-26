@@ -1,4 +1,11 @@
 {
-    "userId": "",
-    "userPassword": ""
+    "userName": "someone",
+    "userPassword": "something",
+    "celcatHost": "https://services-web.u-cergy.fr/calendar",
+    "groupes": [
+        {
+            "name": "GIG1",
+            "id": "22222222"
+        }
+    ]
 }
