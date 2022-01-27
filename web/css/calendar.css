@@ -1,0 +1,25 @@
+
+body{
+    padding: 0;
+    margin: 0;
+}
+
+#calendar {
+    margin: 0;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    height: 100vh;
+}
+
+.day {
+    flex: auto;
+}
+
+.event {
+    position: relative;
+    border-radius: 6px;
+    border-width: 2px;
+    border-style: solid;
+}
