@@ -1,4 +1,4 @@
-package calendar
+package ics
 
 import (
 	"net/http"
@@ -9,6 +9,7 @@ import (
 	"time"
 
 	config "github.com/Obito1903/CY-celcat/pkg"
+	"github.com/Obito1903/CY-celcat/pkg/calendar"
 	"github.com/Obito1903/CY-celcat/pkg/celcat"
 )
 
@@ -30,9 +31,6 @@ func TestEventDetails(t *testing.T) {
 	data := celcat.Login(client, *url, config.UserName, config.UserPassword)
 
 	celcatCalendar := celcat.GetCalendar(client, *url, data.FederationId, time.Date(2022, 01, 24, 0, 0, 0, 0, time.Local), time.Date(2022, 01, 25, 0, 0, 0, 0, time.Local))
-	for _, celcatEvent := range celcatCalendar {
-		event := eventFromCelcat(celcatEvent)
-		t.Log("Id: ", event.Id, "Category: ", event.Category, " | Subjects: ", event.Subjects, " | Location: ", event.Location)
-
-	}
+	calendar := calendar.FromCelcat(celcatCalendar, "GIG1")
+	CalendarToICS(calendar)
 }
