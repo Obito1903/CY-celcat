@@ -38,8 +38,8 @@ func addEventToICS(icsCal *iCal.Calendar, event calendar.Event) {
 		icsEvent.SetLocation(locations)
 	}
 
-	if len(event.Location) > 0 {
-		var organizer string
+	var organizer string
+	if len(event.Professors) > 0 {
 		for idx, professor := range event.Professors {
 			if idx > 0 {
 				professor += ", "
@@ -48,6 +48,7 @@ func addEventToICS(icsCal *iCal.Calendar, event calendar.Event) {
 		}
 		icsEvent.SetOrganizer(organizer)
 	}
+	icsEvent.SetDescription(organizer + " | " + summury + event.Notes)
 }
 
 func CalendarToICS(cal calendar.Calendar) {
