@@ -2,9 +2,28 @@
 body{
     padding: 0;
     margin: 0;
+    display: flex;
+}
+
+#hours {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+}
+
+.hours-list {
+    flex: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+.hour {
+    border-bottom: 2px solid black;
+    flex: auto;
 }
 
 #calendar {
+    flex: auto;
     margin: 0;
     display: flex;
     flex-direction: row;
@@ -14,11 +33,29 @@ body{
 }
 
 .day {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid black;
     flex: auto;
 }
 
-.event {
+.day-header {
+    text-align: center;
+    font-size: x-large;
+    border-bottom: 2px solid black;
+}
+
+.event-list {
     position: relative;
+    flex: auto;
+    display: flex;
+    justify-content: center;
+}
+
+.event {
+    position: absolute;
+    width: 98%;
     border-radius: 6px;
     border-width: 2px;
     border-style: solid;
