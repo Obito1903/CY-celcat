@@ -14,7 +14,7 @@ import (
 )
 
 func TestEventDetails(t *testing.T) {
-	config := config.ReadConfig("../../example.config.json")
+	config := config.ReadConfig("../../../example.config.json")
 	jar, err := cookiejar.New(nil)
 	if err != nil {
 		os.Exit(1)
@@ -32,5 +32,5 @@ func TestEventDetails(t *testing.T) {
 
 	celcatCalendar := celcat.GetCalendar(client, *url, data.FederationId, time.Date(2022, 01, 24, 0, 0, 0, 0, time.Local), time.Date(2022, 01, 25, 0, 0, 0, 0, time.Local))
 	calendar := calendar.FromCelcat(celcatCalendar, "GIG1")
-	CalendarToICS(calendar)
+	IcsToFile(CalendarToICS(calendar), "../../../GIG1.ics")
 }

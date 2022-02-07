@@ -1,12 +1,20 @@
+:root {
+    --border-color: #202225;
+    --background-alter: #32353b;
+    --background: #36393f;
+}
 
 body{
     padding: 0;
     margin: 0;
     display: flex;
+    font-family: sans-serif;
+    background-color: var(--background);
+    color: #ffffff;
 }
 
 #hours {
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     display: flex;
     flex-direction: column;
 }
@@ -18,7 +26,7 @@ body{
     justify-content: space-evenly;
 }
 .hour {
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--border-color);
     flex: auto;
 }
 
@@ -36,14 +44,14 @@ body{
     width: 20%;
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
+    border: 1px solid var(--border-color);
     flex: auto;
 }
 
 .day-header {
     text-align: center;
     font-size: x-large;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid var(--border-color);
 }
 
 .event-list {
@@ -52,11 +60,36 @@ body{
     display: flex;
     justify-content: center;
 }
-
 .event {
+    overflow: hidden;
+    background-color: #2f3136;
     position: absolute;
     width: 98%;
+    border-color: var(--border-color);
     border-radius: 6px;
     border-width: 2px;
     border-style: solid;
+}
+
+.time {
+    font-size: small;
+    padding: 2px 0px 0px 2px;
+}
+
+.event-desc {
+    padding: 0px 2px 0px 2px;
+    font-weight: bold;
+}
+
+.event-location {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.CM {
+    background-color: #ED4245;
+}
+
+.TD, .TP {
+    background-color: #5865F2;
 }

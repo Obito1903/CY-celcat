@@ -1,7 +1,8 @@
 package ics
 
 import (
-	"fmt"
+	"log"
+	"os"
 	"time"
 
 	"github.com/Obito1903/CY-celcat/pkg/calendar"
@@ -51,10 +52,22 @@ func addEventToICS(icsCal *iCal.Calendar, event calendar.Event) {
 	icsEvent.SetDescription(organizer + " | " + summury + event.Notes)
 }
 
-func CalendarToICS(cal calendar.Calendar) {
+func CalendarToICS(cal calendar.Calendar) *iCal.Calendar {
 	icsCal := iCal.NewCalendar()
 	for _, event := range cal.Events {
 		addEventToICS(icsCal, event)
 	}
-	fmt.Println(icsCal.Serialize())
+	return icsCal
+}
+
+func IcsToFile(cal *iCal.Calendar, path string) {
+	f, err := os.Create(path)
+	if err != nil {
+		log.Fatal("Could not save ICS.", err)
+	}
+	defer f.Close()
+	_, err = f.WriteString(cal.Serialize())
+	if err != nil {
+		log.Fatal("Could not save ICS.", err)
+	}
 }
