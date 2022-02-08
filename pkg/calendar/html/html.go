@@ -10,22 +10,32 @@ import (
 	"github.com/Obito1903/CY-celcat/pkg/calendar"
 )
 
-type HtmlEvent struct {
+type htmlEvent struct {
 	Event    calendar.Event
 	Top      float32
 	Height   float32
 	TimeSpan string
 }
 
-type HtmlDay struct {
+type htmlDay struct {
 	Name   string
-	Events []HtmlEvent
+	Events []htmlEvent
 }
 
-type HtmlCalendar struct {
+type htmlCalendar struct {
 	Horaires []string
-	Days     []HtmlDay
+	Days     []htmlDay
 	MaxSpan  time.Duration
+}
+
+func eventToHtmlEvent(htmlCal htmlCalendar, event calendar.Event) htmlEvent {
+	var htmlEv htmlEvent
+}
+
+func calToHtmlCal(cal calendar.Calendar) htmlCalendar {
+
+	var htmlCal htmlCalendar
+
 }
 
 func CalendarToHtml(cal calendar.Calendar, templatePath string) string {
