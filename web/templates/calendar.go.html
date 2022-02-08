@@ -1,0 +1,63 @@
+{{define "calendar"}}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/calendar.css">
+        <title>Document</title>
+    </head>
+
+    <body>
+        <div id="hours">
+            <div class="day-header">Horaires</div>
+            <div class="hours-list">
+                {{range .Horaires}}
+                <div class="hour">{{.}}</div>
+                {{end}}
+            </div>
+        </div>
+        <div id="calendar">
+            {{range .Days}}
+            <div id="{{.Name}}" class="day">
+                <div class="day-header">
+                    {{.Name}}
+                </div>
+                <div class="event-list">
+                    {{range .Events}}
+                    <div class="event {{with .Event}}{{.Category}}{{end}}" style="top: {{.Top}}%;height: {{.Height}}%;">
+                        <div class="time">{{.TimeSpan}}</div>
+                        {{with .Event}}
+                        <div class="event-desc">
+                            {{range .Subjects}}
+                            <span class="subject">
+                                {{.}}
+                            </span>
+                            {{end}}
+                            -
+                            {{range .Professors}}
+                            <span class="professor">
+                                {{.}}
+                            </span>
+                            {{end}}
+                        </div>
+                        <div class="event-location">
+                            {{range .Location}}
+                            <span class="location">
+                                {{.}}
+                            </span>
+                            {{end}}
+                        </div>
+                        {{end}}
+                    </div>
+                    {{end}}
+                </div>
+            </div>
+            {{end}}
+        </div>
+    </body>
+
+</html>
+{{end}}
