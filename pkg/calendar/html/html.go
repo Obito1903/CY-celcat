@@ -17,28 +17,47 @@ type htmlEvent struct {
 	TimeSpan string
 }
 
-type htmlDay struct {
-	Name   string
-	Events []htmlEvent
-}
-
 type htmlCalendar struct {
 	Horaires []string
-	Days     []htmlDay
-	MaxSpan  time.Duration
+	Days     map[time.Weekday]htmlEvent
+	MaxStart time.Time
+	MaxEnd   time.Time
 }
 
-func eventToHtmlEvent(htmlCal htmlCalendar, event calendar.Event) htmlEvent {
-	var htmlEv htmlEvent
+func calcHoraires(cal calendar.Calendar, week time.Time, htmlCal *htmlCalendar) {
+	htmlCal.MaxStart = week.Add(time.Hour * 24)
+	htmlCal.MaxEnd = week
+	for _, event := range cal.Events {
+		if event.End.Before(week.Add(7*24*time.Hour)) && event.Start.Before(week) {
+			if event.End.After(htmlCal.MaxEnd) {
+				htmlCal.MaxEnd = event.End
+			}
+			if event.Start.Before(htmlCal.MaxStart) {
+
+			}
+		}
+	}
 }
 
-func calToHtmlCal(cal calendar.Calendar) htmlCalendar {
+// func eventToHtmlEvent(htmlCal htmlCalendar, event calendar.Event) htmlEvent {
+// 	var htmlEv htmlEvent
+// }
 
+func calToHtmlCal(cal calendar.Calendar, week time.Time) htmlCalendar {
 	var htmlCal htmlCalendar
+	for _, event := range cal.Events {
+		if event.End.Before(week.Add(7*24*3600*1000*1000*1000)) && event.Start.Before(week) {
+			htmlCal.Days[event.Start.Weekday()] = htmlEvent{
+				Event:    event,
+				TimeSpan: event.Start.Format("15h04") + "-" + event.End.Format("15h04"),
+			}
+
+		}
+	}
 
 }
 
-func CalendarToHtml(cal calendar.Calendar, templatePath string) string {
+func CalendarToHtml(cal calendar.Calendar, templatePath string, week time.Time) string {
 	t := template.New("calendar")
 	t, err := template.ParseFiles(templatePath)
 	if err != nil {

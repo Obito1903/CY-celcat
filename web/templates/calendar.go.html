@@ -20,13 +20,13 @@
             </div>
         </div>
         <div id="calendar">
-            {{range .Days}}
-            <div id="{{.Name}}" class="day">
+            {{range $Name, $Events := .Days}}
+            <div id="{{$Name}}" class="day">
                 <div class="day-header">
-                    {{.Name}}
+                    {{$Name}}
                 </div>
                 <div class="event-list">
-                    {{range .Events}}
+                    {{range $Events}}
                     <div class="event {{with .Event}}{{.Category}}{{end}}" style="top: {{.Top}}%;height: {{.Height}}%;">
                         <div class="time">{{.TimeSpan}}</div>
                         {{with .Event}}
