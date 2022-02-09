@@ -5,8 +5,6 @@ import (
 	"os"
 	"time"
 
-	"html/template"
-
 	"github.com/Obito1903/CY-celcat/pkg/calendar"
 )
 
@@ -29,13 +27,18 @@ func calcHoraires(cal calendar.Calendar, week time.Time, htmlCal *htmlCalendar) 
 	htmlCal.MaxEnd = week
 	for _, event := range cal.Events {
 		if event.End.Before(week.Add(7*24*time.Hour)) && event.Start.Before(week) {
-			if event.End.After(htmlCal.MaxEnd) {
-				htmlCal.MaxEnd = event.End
+			start := time.Date(week.Year(), week.Month(), week.Day(), event.Start.Hour(), event.Start.Minute(), 0, 0, time.Local)
+			end := time.Date(week.Year(), week.Month(), week.Day(), event.End.Hour(), event.End.Minute(), 0, 0, time.Local)
+			if end.After(htmlCal.MaxEnd) {
+				htmlCal.MaxEnd = end
 			}
-			if event.Start.Before(htmlCal.MaxStart) {
-
+			if start.Before(htmlCal.MaxStart) {
+				htmlCal.MaxStart = start
 			}
 		}
+	}
+	for h := htmlCal.MaxStart; h.Unix() < htmlCal.MaxEnd.Unix(); h = h.Add(time.Minute * 30) {
+		htmlCal.Horaires = append(htmlCal.Horaires, h.Format("15h04"))
 	}
 }
 
@@ -54,17 +57,17 @@ func calToHtmlCal(cal calendar.Calendar, week time.Time) htmlCalendar {
 
 		}
 	}
-
+	return htmlCal
 }
 
-func CalendarToHtml(cal calendar.Calendar, templatePath string, week time.Time) string {
-	t := template.New("calendar")
-	t, err := template.ParseFiles(templatePath)
-	if err != nil {
-		log.Fatal("Could not load template.", err)
-	}
+// func CalendarToHtml(cal calendar.Calendar, templatePath string, week time.Time) string {
+// 	t := template.New("calendar")
+// 	t, err := template.ParseFiles(templatePath)
+// 	if err != nil {
+// 		log.Fatal("Could not load template.", err)
+// 	}
 
-}
+// }
 
 func HtmlToFile(htmlCal string, path string) {
 	f, err := os.Create(path)
