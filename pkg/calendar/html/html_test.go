@@ -1,7 +1,6 @@
 package html
 
 import (
-	"fmt"
 	"testing"
 	"time"
 
@@ -37,7 +36,8 @@ func TestCalcHoraires(t *testing.T) {
 		},
 	}
 	var htmlCal htmlCalendar
-
 	calcHoraires(cal, time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local), &htmlCal)
-	fmt.Println(htmlCal.MaxEnd.Hour())
+	t.Log(htmlCal.MaxEnd)
+	t.Log(htmlCal.MaxStart)
+	t.Log(htmlCal.Horaires)
 }

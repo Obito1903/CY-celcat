@@ -1,6 +1,7 @@
 package html
 
 import (
+	"fmt"
 	"log"
 	"os"
 	"time"
@@ -26,9 +27,10 @@ func calcHoraires(cal calendar.Calendar, week time.Time, htmlCal *htmlCalendar) 
 	htmlCal.MaxStart = week.Add(time.Hour * 24)
 	htmlCal.MaxEnd = week
 	for _, event := range cal.Events {
-		if event.End.Before(week.Add(7*24*time.Hour)) && event.Start.Before(week) {
+		if event.End.Before(week.Add(7*24*time.Hour)) && event.Start.After(week) {
 			start := time.Date(week.Year(), week.Month(), week.Day(), event.Start.Hour(), event.Start.Minute(), 0, 0, time.Local)
 			end := time.Date(week.Year(), week.Month(), week.Day(), event.End.Hour(), event.End.Minute(), 0, 0, time.Local)
+			fmt.Println(start, end)
 			if end.After(htmlCal.MaxEnd) {
 				htmlCal.MaxEnd = end
 			}
@@ -37,6 +39,7 @@ func calcHoraires(cal calendar.Calendar, week time.Time, htmlCal *htmlCalendar) 
 			}
 		}
 	}
+	htmlCal.MaxStart = time.Date(htmlCal.MaxStart.Year(), htmlCal.MaxStart.Month(), htmlCal.MaxStart.Day(), htmlCal.MaxStart.Hour(), (htmlCal.MaxStart.Minute()/10)*10, 0, 0, time.Local)
 	for h := htmlCal.MaxStart; h.Unix() < htmlCal.MaxEnd.Unix(); h = h.Add(time.Minute * 30) {
 		htmlCal.Horaires = append(htmlCal.Horaires, h.Format("15h04"))
 	}
