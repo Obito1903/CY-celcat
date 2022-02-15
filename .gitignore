@@ -1,7 +1,7 @@
 celcat.exe
 data.ics
 .vscode/
-example.config.json
+config.json
 cal.svg
 CYCelcat-ics_Linux_amd64
 CYCelcat-ics_Win_amd64.exe
@@ -10,3 +10,8 @@ cal.png
 CY-celcat
 script/config
 script/out
+*.ics
+web/static/calendars/*
+out/calendar/html/*
+out/calendar/ics/*
+out/calendar/png/*
