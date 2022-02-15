@@ -117,5 +117,9 @@ func Configure() Config {
 
 	flag.Parse()
 
+	os.MkdirAll(config.HTMLPath, os.ModePerm)
+	os.MkdirAll(config.ICSPath, os.ModePerm)
+	os.MkdirAll(config.PNGPath, os.ModePerm)
+
 	return config
 }
