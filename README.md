@@ -81,6 +81,16 @@ go run ./cmd/cy-celcat/main.go -html=1 -png=1 -web=1 -loop=1
 
 ### Docker
 
+Build image :
+```sh
+docker build -t cy-celcat .
+```
+
+Execute :
+```
+docker run -p 8080:8080 cy-celcat
+```
+
 ## Web Server
 
 The web server will serve fill following that hierarchy:
