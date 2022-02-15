@@ -2,11 +2,14 @@ package html
 
 import (
 	"bytes"
+	"fmt"
 	"html/template"
 	"log"
 	"os"
+	"os/exec"
 	"time"
 
+	config "github.com/Obito1903/CY-celcat/pkg"
 	"github.com/Obito1903/CY-celcat/pkg/calendar"
 )
 
@@ -113,4 +116,11 @@ func (htmlCal htmlCalendar) ToFile(templatePath string, outPath string) {
 	if err != nil {
 		log.Fatal("Could not save HTML.", err)
 	}
+}
+
+func ToPng(config config.Config, htmlPath string, outPath string) {
+	cmd := exec.Command(config.ChromePath, "--headless", "--disable-gpu", "--screenshot="+outPath, fmt.Sprint("--window-size=", config.PngWidth, ",", config.PngHeigh), htmlPath)
+	log.Print(cmd)
+	err := cmd.Run()
+	log.Printf("Command finished with error: %v", err)
 }

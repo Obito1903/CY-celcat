@@ -68,6 +68,6 @@ func TestCalHtml(t *testing.T) {
 	calendar := calendar.FromCelcat(celcatCalendar, "GIG1")
 
 	htmlCal := CalToHtmlCal(calendar, time.Date(2022, 01, 24, 0, 0, 0, 0, time.Local))
-	t.Log(htmlCal)
+	// t.Log(htmlCal)
 	htmlCal.ToFile("../../../web/templates/calendar.go.html", "../../../web/static/calendars/"+calendar.Name+".html")
 }
