@@ -88,7 +88,7 @@ docker build -t cy-celcat .
 
 Execute :
 ```
-docker run -p 8080:8080 cy-celcat
+docker run -p 8080:8080 -v $(pwd)/config.json:/usr/src/app/config.json cy-celcat
 ```
 
 ## Web Server
