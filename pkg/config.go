@@ -16,7 +16,7 @@ type Config struct {
 	// The host of the celcat instance
 	CelcatHost string `json:"celcatHost"`
 	// Enable daemon mode. Default : false
-	Daemon bool `json:"daemon"`
+	Continuous bool `json:"continuous"`
 	// Time in seconds between each query in daemon mode. Default : 120
 	QueryDelay int `json:"queryPeriod"`
 	// Path to the chrome executable. Default : "/usr/bin/chromium"
@@ -65,7 +65,7 @@ func ReadConfig(path string) Config {
 	configByte, _ := ioutil.ReadAll(configJson)
 
 	config := Config{
-		Daemon:       false,
+		Continuous:   false,
 		QueryDelay:   120,
 		ChromePath:   "/usr/bin/chromium",
 		PNG:          false,
@@ -96,7 +96,7 @@ func Configure() Config {
 	flag.StringVar(&config.WebPort, "port", config.WebPort, "Port to listen to for http request.")
 
 	// Daemon config
-	flag.BoolVar(&config.Daemon, "daemon", config.Daemon, "Run in daemon mode. Will query the calendar periodicly according to the period defined in the config.")
+	flag.BoolVar(&config.Continuous, "loop", config.Continuous, "Run in continuous mode. Will query the calendar periodicly according to the period defined in the config.")
 	flag.IntVar(&config.QueryDelay, "delay", config.QueryDelay, "time in seconds between each query in daemon mode.")
 
 	// HTML config

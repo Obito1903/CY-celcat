@@ -1,7 +1,6 @@
 package calendar
 
 import (
-	"fmt"
 	"time"
 
 	"github.com/Obito1903/CY-celcat/pkg/celcat"
@@ -31,7 +30,6 @@ func FirstDayOfISOWeek(date time.Time) time.Time {
 		} else {
 			date = date.AddDate(0, 0, -1)
 		}
-		fmt.Println(date.Weekday())
 	}
 	return date
 }
