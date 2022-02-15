@@ -6,8 +6,114 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="stylesheet" type="text/css" href="../css/calendar.css">
+        <!-- <link rel="stylesheet" type="text/css" href="../css/calendar.css"> -->
         <title>Document</title>
+        <style>
+            :root {
+                --border-color: #202225;
+                --background-alter: #32353b;
+                --background: #36393f;
+            }
+
+            body {
+                padding: 0;
+                margin: 0;
+                display: flex;
+                font-family: sans-serif;
+                background-color: var(--background);
+                color: #ffffff;
+                overflow: hidden;
+            }
+
+            #hours {
+                border: 1px solid var(--border-color);
+                display: flex;
+                flex-direction: column;
+            }
+
+            .hours-list {
+                flex: auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+            }
+
+            .hour {
+                border-bottom: 2px solid var(--border-color);
+                flex: auto;
+            }
+
+            #calendar {
+                flex: auto;
+                margin: 0;
+                display: flex;
+                flex-direction: row;
+                flex-wrap: nowrap;
+                align-items: stretch;
+                height: 100vh;
+            }
+
+            .day {
+                width: 20%;
+                display: flex;
+                flex-direction: column;
+                border: 1px solid var(--border-color);
+                flex: auto;
+            }
+
+            .day-header {
+                text-align: center;
+                font-size: x-large;
+                border-bottom: 2px solid var(--border-color);
+            }
+
+            .event-list {
+                position: relative;
+                flex: auto;
+                display: flex;
+                justify-content: center;
+            }
+
+            .event {
+                overflow: hidden;
+                background-color: #2f3136;
+                position: absolute;
+                width: 98%;
+                border-color: var(--border-color);
+                border-radius: 6px;
+                border-width: 2px;
+                border-style: solid;
+            }
+
+            .time {
+                font-size: small;
+                padding: 2px 0px 0px 2px;
+            }
+
+            .event-desc {
+                padding: 0px 2px 0px 2px;
+                font-weight: bold;
+            }
+
+            .event-location {
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+
+            .CM {
+                background-color: #ED4245;
+            }
+
+            .TD,
+            .TP {
+                background-color: #5865F2;
+            }
+
+            .Examens {
+                background-color: #57F287;
+                color: #23272a;
+            }
+        </style>
     </head>
 
     <body>
