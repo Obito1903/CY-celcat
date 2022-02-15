@@ -81,7 +81,9 @@ func (htmlCal htmlCalendar) calEventToHtmlEvent(event calendar.Event) htmlEvent 
 func CalToHtmlCal(cal calendar.Calendar, week time.Time) htmlCalendar {
 	var htmlCal htmlCalendar
 	// Init htmlCalendar according to the given calendar
+	week = calendar.FirstDayOfISOWeek(week)
 	htmlCal.calcHoraires(cal, week)
+
 	// Init the days map
 	htmlCal.Days = make(map[time.Weekday][]htmlEvent)
 	for _, event := range cal.Events {
@@ -119,8 +121,7 @@ func (htmlCal htmlCalendar) ToFile(templatePath string, outPath string) {
 }
 
 func ToPng(config config.Config, htmlPath string, outPath string) {
-	cmd := exec.Command(config.ChromePath, "--headless", "--disable-gpu", "--screenshot="+outPath, fmt.Sprint("--window-size=", config.PngWidth, ",", config.PngHeigh), htmlPath)
-	log.Print(cmd)
+	cmd := exec.Command(config.ChromePath, "--headless", "--disable-gpu", "--screenshot="+outPath, fmt.Sprint("--window-size=", config.PNGWidth, ",", config.PNGHeigh), htmlPath)
 	err := cmd.Run()
 	log.Printf("Command finished with error: %v", err)
 }
