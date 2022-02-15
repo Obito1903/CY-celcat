@@ -9,16 +9,16 @@ import (
 )
 
 type Config struct {
-	// Username for celcat
+	// Username for celcat.
 	UserName string `json:"userName"`
-	// Password for celcat
+	// Password for celcat.
 	UserPassword string `json:"userPassword"`
-	// The host of the celcat instance
+	// The host of the celcat instance.
 	CelcatHost string `json:"celcatHost"`
-	// Enable daemon mode. Default : false
+	// Run in continuous mode. Will query the calendar periodicly according to the period defined in the config.
 	Continuous bool `json:"continuous"`
-	// Time in seconds between each query in daemon mode. Default : 120
-	QueryDelay int `json:"queryPeriod"`
+	// Time in seconds between each query in daemon mode. Default : 1800
+	QueryDelay int `json:"queryDelay"`
 	// Path to the chrome executable. Default : "/usr/bin/chromium"
 	ChromePath string `json:"chromePath"`
 	// Enable PNG output (Require Chromium on your computer). Default : false
@@ -66,7 +66,7 @@ func ReadConfig(path string) Config {
 
 	config := Config{
 		Continuous:   false,
-		QueryDelay:   120,
+		QueryDelay:   1800,
 		ChromePath:   "/usr/bin/chromium",
 		PNG:          false,
 		PNGPath:      "out/calendar/png/",

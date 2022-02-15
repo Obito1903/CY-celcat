@@ -19,7 +19,7 @@ func main() {
 	if config.Continuous {
 		for {
 			cyCelcat.Query(config, cyCelcat.Period{Start: time.Now(), End: time.Now().Add(time.Hour * 24 * 7 * 3)})
-			time.Sleep(time.Second * time.Duration(config.QueryDelay))
+			time.Sleep(time.Duration(config.QueryDelay) * time.Second)
 		}
 	} else {
 		cyCelcat.Query(config, cyCelcat.Period{Start: time.Now(), End: time.Now().Add(time.Hour * 24 * 7 * 3)})
