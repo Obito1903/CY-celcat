@@ -1,64 +1,93 @@
-# CYtech Celcat
+# CYtech Celcat V2.0
 
-## build
+## Build
 
-### dépendance
+### Dependencies
 
 - golang
   - github.com/arran4/golang-ical
-  - golang.org/x/net
+  - github.com/gorilla/mux
+- Chromium (For PNG output only)
 
 ``` sh
 go get github.com/arran4/golang-ical
-go golang.org/x/net
+go get github.com/gorilla/mux
 ```
 
-### build le projet
+### Build project
 
 ``` sh
-go build ./celcat.go
+go build ./cmd/cy-celcat/main.go
 ```
 
-## Utilisation
+## Usage
 
-Premièrement il faut mettre vos identifiant Celcat dans le fichier `config.json`
+### Configuration
 
-une fois que c'est fait il vous suffit d'exécuter le programme pour obtenir un fichier `data.ics` qui pourra être importé dans n'importe quel gestionnaire d'agenda.
+rename `example.config.json` into `config.json` then edit it to match your situation.
 
-### windows
+Options avalaible :
+
+|   JSON field   |  CLI Option  |   Type   | Desc                                                                                                      |
+| :------------: | :----------: | :------: | --------------------------------------------------------------------------------------------------------- |
+|   `userName`   |    `user`    | `string` | Username for celcat.                                                                                      |
+| `userPassword` |    `pass`    | `string` | Password for celcat.                                                                                      |
+|  `celcatHost`  |    `host`    | `string` | The host of the celcat instance.                                                                          |
+|  `continuous`  |    `loop`    |  `bool`  | Run in continuous mode. Will query the calendar periodicly according to the period defined in the config. |
+|  `queryDelay`  |   `delay`    |  `int`   | Time in seconds between each query in daemon mode. Default : `1800`                                       |
+|  `chromePath`  | `chromePath` | `string` | Path to the chrome executable. Default : `/usr/bin/chromium`                                              |
+|     `png`      |    `png`     |  `bool`  | Enable PNG output (Require Chromium on your computer). Default : `false `                                 |
+|   `pngPath`    |   `pngOut`   | `string` | Output directory for the PNG output. Default : `out/calendar/png/`                                        |
+|   `pngWidth`   |   `width`    |  `int`   | Width of the PNG output. Default : `1920`                                                                 |
+|   `pngHeigh`   |   `height`   |  `int`   | Height of the PNG output. Default : `1080`                                                                |
+|     `html`     |    `html`    |  `bool`  | Enable HTML output. Default : `false`                                                                     |
+| `htmlTemplate` |  `template`  | `string` | The template used to render the html page. Default : `web/templates/calendar.go.html`                     |
+|   `htmlPath`   |  `htmlOut`   | `string` | Output directory for the HTML output. Default : `out/calendar/html/`                                      |
+|     `ics`      |    `ics`     |  `bool`  | Enable ICS output. Default : `true`                                                                       |
+|   `icsPath`    |   `icsOut`   | `string` | Output directory for the ICS output. Default : `out/calendar/ics/`                                        |
+|     `web`      |    `web`     |  `bool`  | Enable the web server. Default : `false`                                                                  |
+|   `webPort`    |    `port`    | `string` | Web listen Port. Default : `8080`                                                                         |
+
+
+#### Add calendars to query from
+
+To track new calendar you need to add them the group they belong to to the config file like so :
+
+```json
+{
+  //...
+  "groupes": [
+    {
+      "name": "Groupe1", // Name of the first calendar/group
+      "id": "22014815" // Id of the calendar/group
+    },
+    //...
+  ]
+}
+```
+
+### Execution
+
+Just output ICS :
 
 ```sh
-.\celcat.exe
+go run ./cmd/cy-celcat/main.go -user=Someuser -pass=Pass
 ```
 
-### linux
-
+ICS+HTML+PNG in continous mode served with a web server
 ```sh
-./celcat
+go run ./cmd/cy-celcat/main.go -html=1 -png=1 -web=1 -loop=1
 ```
 
-### Parametres
+### Docker
 
-#### Generer un fichier SVG
+## Web Server
 
-Il est possible de generer un fichier SVG de la semaine actuel pour cela il suffit d'ajouter l'argument `-svg`, Le nom du fichier de sortie peut etre specifié si besoin
+The web server will serve fill following that hierarchy:
 
-```sh
-./celcat -svg classe1.svg
-```
+- /
+  - \*.ics // Ics file
+  - \*.png // screenshot of the html page
+  - \*     // Html calendar of the current week
 
-#### Fichier de config different
-
-Il est possible de spécifier un fichier de configuration (doit être dans le même dossier, flemme de me faire chier a parse les espaces dans les arguments)
-
-```sh
-./celcat -c example.config.json
-```
-
-#### Récuperer l'agenda sur une période différente
-
-Vous pouvez aussi spécifier la période sur laquelle récupérer l'agenda
-
-```sh
-./celcat -d 2021-03-30 2021-04-30
-```
+Where `*` is the name if each of the calendars specified in the config
