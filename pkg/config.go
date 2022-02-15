@@ -86,7 +86,7 @@ func ReadConfig(path string) Config {
 }
 
 func Configure() Config {
-	config := ReadConfig("./example.config.json")
+	config := ReadConfig("./config.json")
 
 	flag.StringVar(&config.UserName, "user", config.UserName, "Username for celcat.")
 	flag.StringVar(&config.UserPassword, "pass", config.UserPassword, "Password for celcat.")
