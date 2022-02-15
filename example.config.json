@@ -1,0 +1,12 @@
+{
+    "userName": "user",
+    "userPassword": "password",
+    "celcatHost": "https://celcat.somehost.com",
+    "chromePath": "/usr/bin/chromium",
+    "groupes": [
+        {
+            "name": "groupe1",
+            "id": "34895409"
+        }
+    ]
+}
