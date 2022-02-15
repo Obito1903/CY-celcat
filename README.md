@@ -53,7 +53,7 @@ Options avalaible :
 
 To track new calendar you need to add them the group they belong to to the config file like so :
 
-```json
+```js
 {
   //...
   "groupes": [
