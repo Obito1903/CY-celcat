@@ -1,6 +1,7 @@
 package calendar
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/Obito1903/CY-celcat/pkg/celcat"
@@ -21,6 +22,18 @@ type Event struct {
 type Calendar struct {
 	Name   string
 	Events []Event
+}
+
+func FirstDayOfISOWeek(date time.Time) time.Time {
+	for date.Weekday() != time.Monday {
+		if (date.Weekday() == time.Sunday) || (date.Weekday() == time.Saturday) {
+			date = date.AddDate(0, 0, 1)
+		} else {
+			date = date.AddDate(0, 0, -1)
+		}
+		fmt.Println(date.Weekday())
+	}
+	return date
 }
 
 func eventFromCelcat(celcatEvent celcat.CelcatCalEvent) Event {
