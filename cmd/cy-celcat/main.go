@@ -16,13 +16,14 @@ func main() {
 	if config.Web {
 		go http.StartServer(config)
 	}
+	today := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local)
 	if config.Continuous {
 		for {
-			cyCelcat.Query(config, cyCelcat.Period{Start: time.Now(), End: time.Now().Add(time.Hour * 24 * 7 * 3)})
+			cyCelcat.Query(config, cyCelcat.Period{Start: today, End: today.Add(time.Hour * 24 * 7 * 3)})
 			time.Sleep(time.Duration(config.QueryDelay) * time.Second)
 		}
 	} else {
-		cyCelcat.Query(config, cyCelcat.Period{Start: time.Now(), End: time.Now().Add(time.Hour * 24 * 7 * 3)})
+		cyCelcat.Query(config, cyCelcat.Period{Start: today, End: today.Add(time.Hour * 24 * 7 * 3)})
 
 	}
 
