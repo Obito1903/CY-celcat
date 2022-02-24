@@ -14,7 +14,6 @@ EXPOSE 8080
 
 FROM alpine
 
-WORKDIR /cycelcat
 
 RUN apk --no-cache add chromium && \
     adduser -u 1000 -h /cycelcat -D cycelcat
@@ -25,6 +24,6 @@ COPY --from=build --chown=cycelcat /usr/local/bin/app /usr/local/bin/app
 ENV CHROME_BIN=/usr/bin/chromium-browser \
     CHROME_PATH=/usr/lib/chromium/
 
-
+WORKDIR /cycelcat
 USER cycelcat
 ENTRYPOINT ["app", "-html=1", "-png=1", "-web=1", "-loop=1"]
