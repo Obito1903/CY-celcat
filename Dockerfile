@@ -20,10 +20,12 @@ RUN apk --no-cache add chromium && \
 
 COPY --from=build --chown=cycelcat /usr/local/bin/app /usr/local/bin/app
 
-
 ENV CHROME_BIN=/usr/bin/chromium-browser \
     CHROME_PATH=/usr/lib/chromium/
 
 WORKDIR /cycelcat
 USER cycelcat
+
+COPY ./web ./web
+
 ENTRYPOINT ["app", "-html=1", "-png=1", "-web=1", "-loop=1"]
