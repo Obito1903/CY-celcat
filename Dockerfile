@@ -10,8 +10,6 @@ RUN go build -v -o /usr/local/bin/app ./cmd/cy-celcat/main.go
 
 # RUN chown -R cycelcat:cycelcat /usr/src/app
 
-EXPOSE 8080
-
 FROM alpine
 
 
@@ -28,4 +26,5 @@ USER cycelcat
 
 COPY ./web ./web
 
+EXPOSE 8080
 ENTRYPOINT ["app", "-html=1", "-png=1", "-web=1", "-loop=1"]
