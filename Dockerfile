@@ -16,9 +16,11 @@ EXPOSE 8080
 FROM alpine
 
 RUN apk --no-cache add chromium && \
+    mkdir -p /usr/src/app/out && \
     adduser -u 1000 -h /usr/src/app -D cycelcat
 
 COPY --from=build --chown=cycelcat /usr/local/bin/app /usr/local/bin/app
+
 
 ENV CHROME_BIN=/usr/bin/chromium-browser \
     CHROME_PATH=/usr/lib/chromium/
