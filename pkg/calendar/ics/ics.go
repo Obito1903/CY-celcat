@@ -3,6 +3,7 @@ package ics
 import (
 	"log"
 	"os"
+	"strings"
 	"time"
 
 	"github.com/Obito1903/CY-celcat/pkg/calendar"
@@ -52,9 +53,21 @@ func addEventToICS(icsCal *iCal.Calendar, event calendar.Event) {
 	icsEvent.SetDescription(organizer + " | " + summury + event.Notes)
 }
 
+func oneContains(s []string, e string) bool {
+	for _, a := range s {
+		if strings.Contains(a, e) {
+			return true
+		}
+	}
+	return false
+}
+
 func CalendarToICS(cal calendar.Calendar) *iCal.Calendar {
 	icsCal := iCal.NewCalendar()
 	for _, event := range cal.Events {
+		if oneContains(event.Subjects, "Férié") {
+			continue
+		}
 		addEventToICS(icsCal, event)
 	}
 	return icsCal
