@@ -17,15 +17,21 @@ func (serv Server) icsHandler(w http.ResponseWriter, r *http.Request) {
 	varName := vars["groupe"]
 	http.ServeFile(w, r, serv.config.ICSPath+varName)
 }
+
 func (serv Server) pngHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	varName := vars["groupe"]
 	http.ServeFile(w, r, serv.config.PNGPath+varName)
 }
+
 func (serv Server) htmlHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	varName := vars["groupe"]
 	http.ServeFile(w, r, serv.config.HTMLPath+varName+".html")
+}
+
+func (serv Server) indexHandler(w http.ResponseWriter, r *http.Request) {
+	http.ServeFile(w, r, serv.config.HTMLPath+"index.html")
 }
 
 func StartServer(config config.Config) {

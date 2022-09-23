@@ -19,6 +19,8 @@ type Config struct {
 	Continuous bool `json:"continuous"`
 	// Time in seconds between each query in daemon mode. Default : 1800
 	QueryDelay int `json:"queryDelay"`
+	// Number of weeks to query. Default : 4
+	Weeks int `json:"weeks"`
 	// Path to the chrome executable. Default : "/usr/bin/chromium"
 	ChromePath string `json:"chromePath"`
 	// Enable PNG output (Require Chromium on your computer). Default : false
@@ -67,6 +69,7 @@ func ReadConfig(path string) Config {
 	config := Config{
 		Continuous:   false,
 		QueryDelay:   1800,
+		Weeks:        4,
 		ChromePath:   "/usr/bin/chromium",
 		PNG:          false,
 		PNGPath:      "out/calendar/png/",
@@ -98,6 +101,7 @@ func Configure() Config {
 	// Daemon config
 	flag.BoolVar(&config.Continuous, "loop", config.Continuous, "Run in continuous mode. Will query the calendar periodicly according to the period defined in the config.")
 	flag.IntVar(&config.QueryDelay, "delay", config.QueryDelay, "time in seconds between each query in daemon mode.")
+	flag.IntVar(&config.Weeks, "weeks", config.Weeks, "Number of weeks to query.")
 
 	// HTML config
 	flag.StringVar(&config.HTMLPath, "htmlOut", config.HTMLPath, "Output directory for the HTML output")

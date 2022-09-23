@@ -1,6 +1,7 @@
 package cyCelcat
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"net/http/cookiejar"
@@ -31,27 +32,44 @@ func Query(config config.Config, period Period) {
 	}
 	url, err := url.Parse(config.CelcatHost)
 	if err != nil {
-		log.Fatal("Could not parse Celcat resoinse")
+		log.Fatal("Could not parse Celcat response")
 		os.Exit(1)
 	}
 	celcat.Login(client, *url, config.UserName, config.UserPassword)
 
 	log.Print("Query period : ", period)
+
+	calendarList := []calendar.Calendar{}
+
 	for _, groupe := range config.Groupes {
 		log.Print("Processing groupe : ", groupe.Name, " | ", groupe.Id)
 		period.Start = calendar.FirstDayOfISOWeek(period.Start)
+		period.End = calendar.FirstDayOfISOWeek(period.End.Add(time.Hour * 24 * 7))
 		celcatCalendar := celcat.GetCalendar(client, *url, groupe.Id, period.Start, period.End)
-		calendar := calendar.FromCelcat(celcatCalendar, groupe.Name)
+		calendarList = append(calendarList, calendar.FromCelcat(celcatCalendar, groupe.Name))
+	}
+
+	for _, calendar := range calendarList {
 		if config.ICS {
 			ics.IcsToFile(ics.CalendarToICS(calendar), config.ICSPath+calendar.Name+".ics")
 		}
 
 		if config.HTML {
-			htmlCal := html.CalToHtmlCal(calendar, period.Start)
-			htmlCal.ToFile(config.HtmlTemplate, config.HTMLPath+calendar.Name+".html")
-			if config.PNG {
-				html.ToPng(config, config.HTMLPath+calendar.Name+".html", config.PNGPath+calendar.Name+".png")
+			for week := 0; week < config.Weeks; week++ {
+				htmlCal := html.CalToHtmlCal(calendar, period.Start.Add(time.Hour*24*7*time.Duration(week)))
+				name := calendar.Name
+				if week != 0 {
+					name = name + "+" + fmt.Sprint(week)
+				}
+
+				htmlCal.ToFile(config.HtmlTemplate, config.HTMLPath+name+".html")
+
+				if config.PNG && week == 0 {
+					html.ToPng(config, config.HTMLPath+calendar.Name+".html", config.PNGPath+calendar.Name+".png")
+				}
+
 			}
+
 		}
 	}
 

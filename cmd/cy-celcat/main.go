@@ -37,12 +37,12 @@ func main() {
 	if config.Continuous {
 		for {
 			today := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local)
-			cyCelcat.Query(config, cyCelcat.Period{Start: today, End: today.Add(time.Hour * 24 * 7 * 3)})
+			cyCelcat.Query(config, cyCelcat.Period{Start: today, End: today.Add(time.Hour * 24 * 7 * time.Duration(config.Weeks))})
 			time.Sleep(time.Duration(config.QueryDelay) * time.Second)
 		}
 	} else {
 		today := time.Date(time.Now().Year(), time.Now().Month(), time.Now().Day(), 0, 0, 0, 0, time.Local)
-		cyCelcat.Query(config, cyCelcat.Period{Start: today, End: today.Add(time.Hour * 24 * 7 * 3)})
+		cyCelcat.Query(config, cyCelcat.Period{Start: today, End: today.Add(time.Hour * 24 * 7 * time.Duration(config.Weeks))})
 
 	}
 

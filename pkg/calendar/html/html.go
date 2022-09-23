@@ -94,6 +94,15 @@ func CalToHtmlCal(cal calendar.Calendar, week time.Time) htmlCalendar {
 	return htmlCal
 }
 
+func GenrateIndex(cal calendar.Calendar, templatePath string, outPath string) {
+	// Get the current week
+	week := calendar.FirstDayOfISOWeek(time.Now())
+	// Convert the calendar into an htmlCalendar
+	htmlCal := CalToHtmlCal(cal, week)
+	// Write the htmlCalendar into a file
+	htmlCal.ToFile(templatePath, outPath)
+}
+
 func (cal htmlCalendar) ToHtml(templatePath string) string {
 	t, err := template.New("calendar").ParseFiles(templatePath)
 	if err != nil {
