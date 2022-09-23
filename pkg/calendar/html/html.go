@@ -7,7 +7,6 @@ import (
 	"log"
 	"os"
 	"os/exec"
-	"strings"
 	"time"
 
 	config "github.com/Obito1903/CY-celcat/pkg"
@@ -79,15 +78,6 @@ func (htmlCal htmlCalendar) calEventToHtmlEvent(event calendar.Event) htmlEvent 
 	return htmlEv
 }
 
-func oneContains(s []string, e string) bool {
-	for _, a := range s {
-		if strings.Contains(a, e) {
-			return true
-		}
-	}
-	return false
-}
-
 // Convert a Calendar into an htmlCalendar
 func CalToHtmlCal(cal calendar.Calendar, week time.Time) htmlCalendar {
 	var htmlCal htmlCalendar
@@ -100,10 +90,6 @@ func CalToHtmlCal(cal calendar.Calendar, week time.Time) htmlCalendar {
 	// Init the days map
 	htmlCal.Days = make(map[time.Weekday][]htmlEvent)
 	for _, event := range cal.Events {
-		if oneContains(event.Subjects, "Férié") {
-			continue
-		}
-
 		if event.End.Before(week.Add(7*24*3600*1000*1000*1000)) && event.Start.After(week) {
 			htmlCal.Days[event.Start.Weekday()] = append(htmlCal.Days[event.Start.Weekday()], htmlCal.calEventToHtmlEvent(event))
 		}

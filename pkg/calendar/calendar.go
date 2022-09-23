@@ -64,7 +64,11 @@ func FromCelcat(celcatCalendar []celcat.CelcatCalEvent, name string) Calendar {
 	var calendar Calendar
 	calendar.Name = name
 	for _, event := range celcatCalendar {
-		calendar.Events = append(calendar.Events, eventFromCelcat(event))
+		calEvent := eventFromCelcat(event)
+		if event.AllDay {
+			continue
+		}
+		calendar.Events = append(calendar.Events, calEvent)
 	}
 	return calendar
 }
