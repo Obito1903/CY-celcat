@@ -1,0 +1,172 @@
+{{define "index"}}
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>CY-celcat</title>
+        <style>
+            :root {
+                --border-color: #202225;
+                --background-alter: #32353b;
+                --background: #36393f;
+            }
+
+            body {
+                padding: 0;
+                margin: 0;
+                display: flex;
+                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+                font-weight: bold;
+                font-size: large;
+                background-color: var(--background);
+                color: #ffffff;
+                overflow: hidden;
+                height: 100vh;
+
+                justify-content: center;
+                align-items: center;
+            }
+
+            /* unvisited link */
+            a:link {
+                color: white;
+                text-decoration: none;
+            }
+
+            /* visited link */
+            a:visited {
+                color: white;
+                text-decoration: none;
+            }
+
+            /* mouse over link */
+            a:hover {
+                color: #57F287;
+            }
+
+            /* selected link */
+            a:active {
+                color: none;
+            }
+
+            table {
+                border-collapse: collapse;
+            }
+
+
+            .calscontainer {
+                background-color: #2f3136;
+                border-color: var(--border-color);
+                border-radius: 6px;
+                border-width: 2px;
+                border-style: solid;
+                padding: 40px;
+            }
+
+            .cal {
+                /* display: flex; */
+                justify-content: center;
+                align-items: center;
+            }
+
+            .cal>td {
+                border-bottom: var(--border-color) 2px solid;
+                padding-bottom: 6px;
+            }
+
+            .cal>td:not(:first-child) {
+                padding-top: 6px;
+            }
+
+            .calname {
+                margin-right: 2em;
+            }
+
+            .rowname {
+                text-align: left;
+            }
+
+            .rowlinks {
+                width: 100%;
+                height: 100%;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+            }
+
+            .button {
+                border-color: var(--border-color);
+                border-radius: 6px;
+                border-width: 2px;
+                border-style: solid;
+
+                padding: 2px;
+                padding-left: 4px;
+                padding-right: 4px;
+
+                color: #202225;
+                font-size: medium;
+                font-weight: 600;
+
+                text-align: center;
+            }
+
+            .button:link {
+                color: var(--border-color);
+            }
+
+            .button:visited {
+                color: var(--border-color);
+            }
+
+            .button:hover {
+                color: black;
+                zoom: 110%;
+            }
+
+            .gcal {
+                margin-right: 4px;
+                background-color: #ED4245;
+            }
+
+            .ics {
+                margin-right: 4px;
+                background-color: #5865F2;
+            }
+
+            .png {
+                background-color: #FEE75C;
+            }
+
+        </style>
+    </head>
+
+    <body>
+        <div class="calscontainer">
+            <table>
+                {{range .Groupes}}
+                <tr class="cal">
+                    <td class="rowname">
+                        <span class="calname"> <a href="{{.Name}}">{{.Name}}</a></span>
+                    </td>
+                    <td>
+                        <div class="rowlinks">
+                            {{if .Gcal}}
+                            <a href="{{.Gcal}}" class="button gcal">GCal</a>
+                            {{end}}
+                            <a href="{{.Name}}.ics" class="button ics">ICS</a>
+                            <a href="{{.Name}}.png" class="button png">PNG</a>
+                        </div>
+                    </td>
+                </tr>
+                {{end}}
+            </table>
+
+        </div>
+    </body>
+
+</html>
+{{end}}

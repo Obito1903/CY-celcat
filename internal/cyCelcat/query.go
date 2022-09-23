@@ -55,6 +55,7 @@ func Query(config config.Config, period Period) {
 		}
 
 		if config.HTML {
+			html.GenrateIndex(config, config.IndexTemplate, config.HTMLPath+"index.html")
 			for week := 0; week < config.Weeks; week++ {
 				htmlCal := html.CalToHtmlCal(calendar, period.Start.Add(time.Hour*24*7*time.Duration(week)))
 				name := calendar.Name

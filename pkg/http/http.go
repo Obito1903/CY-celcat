@@ -40,6 +40,7 @@ func StartServer(config config.Config) {
 	rtr.HandleFunc("/{groupe:[[:alnum:]]+.ics}", serv.icsHandler)
 	rtr.HandleFunc("/{groupe:[[:alnum:]]+.png}", serv.pngHandler)
 	rtr.HandleFunc("/{groupe:[[:alnum:]]+}", serv.htmlHandler)
+	rtr.HandleFunc("/", serv.indexHandler)
 	http.Handle("/", rtr)
 	if err := http.ListenAndServe(":"+config.WebPort, nil); err != nil {
 		log.Fatal(err)

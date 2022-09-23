@@ -21,6 +21,7 @@ type htmlEvent struct {
 }
 
 type htmlCalendar struct {
+	Name     string
 	Horaires []string
 	Days     map[time.Weekday][]htmlEvent
 	MaxStart time.Time
@@ -84,6 +85,8 @@ func CalToHtmlCal(cal calendar.Calendar, week time.Time) htmlCalendar {
 	week = calendar.FirstDayOfISOWeek(week)
 	htmlCal.calcHoraires(cal, week)
 
+	htmlCal.Name = cal.Name
+
 	// Init the days map
 	htmlCal.Days = make(map[time.Weekday][]htmlEvent)
 	for _, event := range cal.Events {
@@ -94,13 +97,29 @@ func CalToHtmlCal(cal calendar.Calendar, week time.Time) htmlCalendar {
 	return htmlCal
 }
 
-func GenrateIndex(cal calendar.Calendar, templatePath string, outPath string) {
-	// Get the current week
-	week := calendar.FirstDayOfISOWeek(time.Now())
-	// Convert the calendar into an htmlCalendar
-	htmlCal := CalToHtmlCal(cal, week)
-	// Write the htmlCalendar into a file
-	htmlCal.ToFile(templatePath, outPath)
+func GenrateIndex(config config.Config, templatePath string, out string) string {
+	t, err := template.New("index").ParseFiles(templatePath)
+	if err != nil {
+		log.Fatal("Could not parse template.", err)
+	}
+	var buf bytes.Buffer
+
+	err = t.Execute(&buf, config)
+	if err != nil {
+		log.Fatal("Could not execute template.", err)
+	}
+
+	f, err := os.Create(out)
+	if err != nil {
+		log.Fatal("Could not save HTML.", err)
+	}
+	defer f.Close()
+	_, err = f.WriteString(buf.String())
+	if err != nil {
+		log.Fatal("Could not save HTML.", err)
+	}
+
+	return buf.String()
 }
 
 func (cal htmlCalendar) ToHtml(templatePath string) string {

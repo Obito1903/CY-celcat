@@ -36,6 +36,9 @@ type Config struct {
 	// The template used to render the html page.
 	// Default : "web/templates/calendar.go.html"
 	HtmlTemplate string `json:"htmlTemplate"`
+	// The template used to render the html page.
+	// Default : "web/templates/index.go.html"
+	IndexTemplate string `json:"indexTemplate"`
 	// Output directory for the HTML output. Default : "out/calendar/html/"
 	HTMLPath string `json:"htmlPath"`
 	// Enable ICS output. Default : true
@@ -52,6 +55,7 @@ type Config struct {
 
 type Groupe struct {
 	Name string `json:"name"`
+	Gcal string `json:"gcal,omitempty"`
 	Id   string `json:"id"`
 }
 
@@ -67,21 +71,22 @@ func ReadConfig(path string) Config {
 	configByte, _ := ioutil.ReadAll(configJson)
 
 	config := Config{
-		Continuous:   false,
-		QueryDelay:   1800,
-		Weeks:        4,
-		ChromePath:   "/usr/bin/chromium",
-		PNG:          false,
-		PNGPath:      "out/calendar/png/",
-		PNGWidth:     1920,
-		PNGHeigh:     1080,
-		HTML:         false,
-		HtmlTemplate: "web/templates/calendar.go.html",
-		HTMLPath:     "out/calendar/html/",
-		ICS:          false,
-		ICSPath:      "out/calendar/ics/",
-		Web:          false,
-		WebPort:      "8080",
+		Continuous:    false,
+		QueryDelay:    1800,
+		Weeks:         4,
+		ChromePath:    "/usr/bin/chromium",
+		PNG:           false,
+		PNGPath:       "out/calendar/png/",
+		PNGWidth:      1920,
+		PNGHeigh:      1080,
+		HTML:          false,
+		HtmlTemplate:  "web/templates/calendar.go.html",
+		IndexTemplate: "web/templates/index.go.html",
+		HTMLPath:      "out/calendar/html/",
+		ICS:           false,
+		ICSPath:       "out/calendar/ics/",
+		Web:           false,
+		WebPort:       "8080",
 	}
 
 	json.Unmarshal(configByte, &config)
@@ -107,6 +112,7 @@ func Configure() Config {
 	flag.StringVar(&config.HTMLPath, "htmlOut", config.HTMLPath, "Output directory for the HTML output")
 	flag.BoolVar(&config.HTML, "html", config.HTML, "Enable HTML output.")
 	flag.StringVar(&config.HtmlTemplate, "template", config.HtmlTemplate, "Path to the HTML template for the HTML Calendar.")
+	flag.StringVar(&config.IndexTemplate, "indextemplate", config.IndexTemplate, "Path to the HTML template for the HTML Calendar.")
 
 	// ICS config
 	flag.StringVar(&config.ICSPath, "icsOut", config.ICSPath, "Output directory for the ICS output.")
