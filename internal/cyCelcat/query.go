@@ -2,6 +2,7 @@ package cyCelcat
 
 import (
 	"fmt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"net/http/cookiejar"
@@ -52,6 +53,13 @@ func Query(config config.Config, period Period) {
 	for _, calendar := range calendarList {
 		if config.ICS {
 			ics.IcsToFile(ics.CalendarToICS(calendar), config.ICSPath+calendar.Name+".ics")
+		}
+
+		fmt.Printf("Calendar %s next event : %+v\n", calendar.Name, calendar.TomorrowFirstEvent())
+
+		if config.NextAlarm {
+			nextDayEvent := calendar.NextEventToJson()
+			_ = ioutil.WriteFile(config.NextAlarmPath+calendar.Name+".json", []byte(nextDayEvent), 0644)
 		}
 
 		if config.HTML {

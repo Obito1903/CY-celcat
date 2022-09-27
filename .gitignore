@@ -12,7 +12,5 @@ script/config
 script/out
 *.ics
 web/static/calendars/*
-out/calendar/html/*
-out/calendar/ics/*
-out/calendar/png/*
+out/
 main

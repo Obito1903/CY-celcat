@@ -38,6 +38,10 @@ type Config struct {
 	HtmlTemplate string `json:"htmlTemplate"`
 	// Output directory for the HTML output. Default : "out/calendar/html/"
 	HTMLPath string `json:"htmlPath"`
+	// Enable next Alarm output. Default : false
+	NextAlarm bool `json:"nextAlarm"`
+	// Output directory for the nextAlarm json
+	NextAlarmPath string `json:"nextAlarmPath"`
 	// Enable ICS output. Default : true
 	ICS bool `json:"ics"`
 	// Output directory for the ICS output. Default : "out/calendar/ics/"
@@ -67,21 +71,23 @@ func ReadConfig(path string) Config {
 	configByte, _ := ioutil.ReadAll(configJson)
 
 	config := Config{
-		Continuous:   false,
-		QueryDelay:   1800,
-		Weeks:        4,
-		ChromePath:   "/usr/bin/chromium",
-		PNG:          false,
-		PNGPath:      "out/calendar/png/",
-		PNGWidth:     1920,
-		PNGHeigh:     1080,
-		HTML:         false,
-		HtmlTemplate: "web/templates/calendar.go.html",
-		HTMLPath:     "out/calendar/html/",
-		ICS:          false,
-		ICSPath:      "out/calendar/ics/",
-		Web:          false,
-		WebPort:      "8080",
+		Continuous:    false,
+		QueryDelay:    1800,
+		Weeks:         4,
+		ChromePath:    "/usr/bin/chromium",
+		PNG:           false,
+		PNGPath:       "out/calendar/png/",
+		PNGWidth:      1920,
+		PNGHeigh:      1080,
+		HTML:          false,
+		HtmlTemplate:  "web/templates/calendar.go.html",
+		HTMLPath:      "out/calendar/html/",
+		NextAlarm:     false,
+		NextAlarmPath: "out/calendar/nextAlarms/",
+		ICS:           false,
+		ICSPath:       "out/calendar/ics/",
+		Web:           false,
+		WebPort:       "8080",
 	}
 
 	json.Unmarshal(configByte, &config)
@@ -107,6 +113,10 @@ func Configure() Config {
 	flag.StringVar(&config.HTMLPath, "htmlOut", config.HTMLPath, "Output directory for the HTML output")
 	flag.BoolVar(&config.HTML, "html", config.HTML, "Enable HTML output.")
 	flag.StringVar(&config.HtmlTemplate, "template", config.HtmlTemplate, "Path to the HTML template for the HTML Calendar.")
+
+	// Next Alarm config
+	flag.BoolVar(&config.NextAlarm, "nextAlarm", config.NextAlarm, "Enable next Alarm output.")
+	flag.StringVar(&config.NextAlarmPath, "nextAlarmOut", config.NextAlarmPath, "Output directory for the nextAlarm json")
 
 	// ICS config
 	flag.StringVar(&config.ICSPath, "icsOut", config.ICSPath, "Output directory for the ICS output.")

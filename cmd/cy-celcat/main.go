@@ -25,6 +25,10 @@ func initDirs(config config.Config) {
 	if err != nil {
 		log.Fatal("Could not create PNG Path.", err)
 	}
+	os.MkdirAll(config.NextAlarmPath, os.ModePerm)
+	if err != nil {
+		log.Fatal("Could not create NextAlarm Path.", err)
+	}
 }
 
 func main() {
