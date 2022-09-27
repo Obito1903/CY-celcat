@@ -150,7 +150,7 @@ func (htmlCal htmlCalendar) ToFile(templatePath string, outPath string) {
 
 func ToPng(config config.Config, htmlPath string, outPath string) {
 	cmd := exec.Command(config.ChromePath, "--headless", "--no-sandbox", "--disable-gpu", "--screenshot="+outPath, fmt.Sprint("--window-size=", config.PNGWidth, ",", config.PNGHeigh), htmlPath)
-	err := cmd.Start()
+	err := cmd.Run()
 	if err != nil {
 		log.Fatal("Could not start Chrome.", err)
 	}
