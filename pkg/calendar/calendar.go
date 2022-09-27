@@ -1,6 +1,8 @@
 package calendar
 
 import (
+	"encoding/json"
+	"sort"
 	"time"
 
 	"github.com/Obito1903/CY-celcat/pkg/celcat"
@@ -21,6 +23,36 @@ type Event struct {
 type Calendar struct {
 	Name   string
 	Events []Event
+}
+
+type ByDate []Event
+
+func (a ByDate) Len() int           { return len(a) }
+func (a ByDate) Swap(i, j int)      { a[i], a[j] = a[j], a[i] }
+func (a ByDate) Less(i, j int) bool { return a[i].Start.Before(a[j].Start) }
+
+func (c *Calendar) TomorrowFirstEvent() Event {
+	sort.Sort(ByDate(c.Events))
+	tomorrow := time.Now().Truncate(24*time.Hour).AddDate(0, 0, 1)
+	for _, event := range c.Events {
+		if event.Start.After(tomorrow) {
+			return event
+		}
+	}
+	return Event{}
+}
+
+func (calendar Calendar) NextEventToJson() string {
+	event := calendar.TomorrowFirstEvent()
+	if event.Id == "" {
+		return "No events tomorrow"
+	}
+
+	jsonEvent, err := json.Marshal(event)
+	if err != nil {
+		return "Error while marshalling event"
+	}
+	return string(jsonEvent)
 }
 
 func FirstDayOfISOWeek(date time.Time) time.Time {

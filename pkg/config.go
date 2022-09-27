@@ -41,6 +41,10 @@ type Config struct {
 	IndexTemplate string `json:"indexTemplate"`
 	// Output directory for the HTML output. Default : "out/calendar/html/"
 	HTMLPath string `json:"htmlPath"`
+	// Enable next Alarm output. Default : false
+	NextAlarm bool `json:"nextAlarm"`
+	// Output directory for the nextAlarm json
+	NextAlarmPath string `json:"nextAlarmPath"`
 	// Enable ICS output. Default : true
 	ICS bool `json:"ics"`
 	// Output directory for the ICS output. Default : "out/calendar/ics/"
@@ -83,6 +87,8 @@ func ReadConfig(path string) Config {
 		HtmlTemplate:  "web/templates/calendar.go.html",
 		IndexTemplate: "web/templates/index.go.html",
 		HTMLPath:      "out/calendar/html/",
+		NextAlarm:     false,
+		NextAlarmPath: "out/calendar/nextAlarms/",
 		ICS:           false,
 		ICSPath:       "out/calendar/ics/",
 		Web:           false,
@@ -113,6 +119,10 @@ func Configure() Config {
 	flag.BoolVar(&config.HTML, "html", config.HTML, "Enable HTML output.")
 	flag.StringVar(&config.HtmlTemplate, "template", config.HtmlTemplate, "Path to the HTML template for the HTML Calendar.")
 	flag.StringVar(&config.IndexTemplate, "indextemplate", config.IndexTemplate, "Path to the HTML template for the HTML Calendar.")
+
+	// Next Alarm config
+	flag.BoolVar(&config.NextAlarm, "nextAlarm", config.NextAlarm, "Enable next Alarm output.")
+	flag.StringVar(&config.NextAlarmPath, "nextAlarmOut", config.NextAlarmPath, "Output directory for the nextAlarm json")
 
 	// ICS config
 	flag.StringVar(&config.ICSPath, "icsOut", config.ICSPath, "Output directory for the ICS output.")
