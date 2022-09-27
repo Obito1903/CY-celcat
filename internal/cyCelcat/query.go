@@ -55,7 +55,7 @@ func Query(config config.Config, period Period) {
 			ics.IcsToFile(ics.CalendarToICS(calendar), config.ICSPath+calendar.Name+".ics")
 		}
 
-		fmt.Printf("Calendar %s next event : %+v\n", calendar.Name, calendar.TomorrowFirstEvent())
+		// fmt.Printf("Calendar %s next event : %+v\n", calendar.Name, calendar.TomorrowFirstEvent())
 
 		if config.NextAlarm {
 			nextDayEvent := calendar.NextEventToJson()
