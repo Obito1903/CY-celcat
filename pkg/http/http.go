@@ -6,6 +6,7 @@ import (
 
 	config "github.com/Obito1903/CY-celcat/pkg"
 	"github.com/gorilla/mux"
+	"github.com/rs/cors"
 )
 
 type Server struct {
@@ -49,7 +50,13 @@ func StartServer(config config.Config) {
 	rtr.HandleFunc("/", serv.indexHandler)
 	rtr.HandleFunc("/{groupe:[[:alnum:]]+}/nextAlarm", serv.nextAlarmHandler)
 	http.Handle("/", rtr)
-	if err := http.ListenAndServe(":"+config.WebPort, nil); err != nil {
+
+	var handler http.Handler
+	if config.AllowCORS {
+		handler = cors.Default().Handler(rtr)
+	}
+
+	if err := http.ListenAndServe(":"+config.WebPort, handler); err != nil {
 		log.Fatal(err)
 	}
 }

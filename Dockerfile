@@ -12,9 +12,10 @@ RUN go build -v -o /usr/local/bin/app ./cmd/cy-celcat/main.go
 
 FROM alpine
 
-
 RUN apk --no-cache add chromium && \
     adduser -u 1000 -h /cycelcat -D cycelcat
+
+RUN apk add -U tzdata
 
 COPY --from=build --chown=cycelcat /usr/local/bin/app /usr/local/bin/app
 

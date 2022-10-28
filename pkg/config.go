@@ -55,6 +55,8 @@ type Config struct {
 	WebPort string `json:"webPort"`
 	// List of groups to query
 	Groupes []Groupe `json:"groupes"`
+	// Allow all cors
+	AllowCORS bool `json:"allowCors"`
 }
 
 type Groupe struct {
@@ -93,6 +95,7 @@ func ReadConfig(path string) Config {
 		ICSPath:       "out/calendar/ics/",
 		Web:           false,
 		WebPort:       "8080",
+		AllowCORS:     false,
 	}
 
 	json.Unmarshal(configByte, &config)
@@ -108,6 +111,7 @@ func Configure() Config {
 
 	flag.BoolVar(&config.Web, "web", config.Web, "Enable the web server.")
 	flag.StringVar(&config.WebPort, "port", config.WebPort, "Port to listen to for http request.")
+	flag.BoolVar(&config.AllowCORS, "allowCors", config.AllowCORS, "Allow all cross-origin resource sharing.")
 
 	// Daemon config
 	flag.BoolVar(&config.Continuous, "loop", config.Continuous, "Run in continuous mode. Will query the calendar periodicly according to the period defined in the config.")
