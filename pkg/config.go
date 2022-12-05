@@ -91,7 +91,7 @@ func ReadConfig(path string) Config {
 		HTMLPath:      "out/calendar/html/",
 		NextAlarm:     false,
 		NextAlarmPath: "out/calendar/nextAlarms/",
-		ICS:           false,
+		ICS:           true,
 		ICSPath:       "out/calendar/ics/",
 		Web:           false,
 		WebPort:       "8080",
