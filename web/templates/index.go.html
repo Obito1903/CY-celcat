@@ -197,15 +197,15 @@
                 {{end}}
                 <tr class="cal">
                     <td class="rowname">
-                        <span class="calname"> <a href="{{calname}}">{{calname}}</a></span>
+                        <span class="calname"> <a href="{{$calname}}">{{.Name}}</a></span>
                     </td>
                     <td>
                         <div class="rowlinks">
                             {{if .Gcal}}
                             <a href="{{.Gcal}}" class="button gcal">GCal</a>
                             {{end}}
-                            <a href="{{calname}}.ics" class="button ics">ICS</a>
-                            <a href="{{calname}}.png" class="button png">PNG</a>
+                            <a href="{{$calname}}.ics" class="button ics">ICS</a>
+                            <a href="{{$calname}}.png" class="button png">PNG</a>
                         </div>
                     </td>
                 </tr>

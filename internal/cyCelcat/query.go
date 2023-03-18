@@ -8,7 +8,6 @@ import (
 	"net/http/cookiejar"
 	"net/url"
 	"os"
-	"strings"
 	"time"
 
 	config "github.com/Obito1903/CY-celcat/pkg"
@@ -60,7 +59,7 @@ func Query(config config.Config, period Period) {
 		for _, calendar := range campus {
 			calendarName := calendar.Name
 			if campusName != "pau" {
-				calendarName = strings.ToUpper(campusName) + "-" + calendar.Name
+				calendarName = campusName + "-" + calendar.Name
 			}
 
 			if config.ICS {
