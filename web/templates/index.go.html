@@ -193,7 +193,7 @@
                 {{range $value}}
                 {{$calname := .Name}}
                 {{if ne $key "pau"}}
-                {{$calname = printf "%s-%s" $key $calname}}
+                {{$calname = printf "%s%s" $key $calname}}
                 {{end}}
                 <tr class="cal">
                     <td class="rowname">
