@@ -54,7 +54,9 @@ type Config struct {
 	//Web listen Port. Default : 8080
 	WebPort string `json:"webPort"`
 	// List of groups to query
-	Groupes []Groupe `json:"groupes"`
+	Groups map[string][]Groupe `json:"groups"`
+	// Default Campus
+	DefaultCampus string `json:"defaultCampus"`
 	// Allow all cors
 	AllowCORS bool `json:"allowCors"`
 }
@@ -95,6 +97,7 @@ func ReadConfig(path string) Config {
 		ICSPath:       "out/calendar/ics/",
 		Web:           false,
 		WebPort:       "8080",
+		DefaultCampus: "pau",
 		AllowCORS:     false,
 	}
 

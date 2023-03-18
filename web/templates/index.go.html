@@ -2,165 +2,195 @@
 <!DOCTYPE html>
 <html lang="en">
 
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <!-- Metrics (only check user agent and ip, doesn't keep it in the backend) -->
-        <script defer data-domain="celcat.obito.fr" src="https://plausible.obito.fr/js/script.js"></script>
-        <title>CY-celcat</title>
-        <style>
-            :root {
-                --border-color: #202225;
-                --background-alter: #32353b;
-                --background: #36393f;
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Metrics (only check user agent and ip, doesn't keep it in the backend) -->
+    <script defer data-domain="celcat.obito.fr" src="https://plausible.obito.fr/js/script.js"></script>
+    <title>CY-celcat</title>
+    <style>
+        :root {
+            --border-color: #202225;
+            --background-alter: #32353b;
+            --background: #36393f;
+        }
+
+        body {
+            background-color: var(--background);
+            color: #ffffff;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-weight: bold;
+            font-size: large;
+        }
+
+        .main {
+            padding: 0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+
+            overflow: hidden;
+            height: 100vh;
+
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* unvisited link */
+        a:link {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* visited link */
+        a:visited {
+            color: white;
+            text-decoration: none;
+        }
+
+        /* mouse over link */
+        a:hover {
+            color: #57F287;
+        }
+
+        /* selected link */
+        a:active {
+            color: none;
+        }
+
+        table {
+            border-collapse: collapse;
+        }
+
+
+
+        .calscontainer+.calscontainer {
+            margin-top: 10px;
+        }
+
+        .calscontainer {
+            background-color: #2f3136;
+            border-color: var(--border-color);
+            border-radius: 6px;
+            border-width: 2px;
+            border-style: solid;
+            padding: 40px;
+            margin-left: 10px;
+            margin-right: 10px;
+        }
+
+        .cal {
+            /* display: flex; */
+            justify-content: center;
+            align-items: center;
+        }
+
+        .cal>td {
+            border-bottom: var(--border-color) 2px solid;
+            padding-bottom: 6px;
+        }
+
+        .cal>td:not(:first-child) {
+            padding-top: 6px;
+        }
+
+        .calname {
+            margin-right: 2em;
+        }
+
+        .rowname {
+            text-align: left;
+        }
+
+        .rowlinks {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button {
+            border-color: var(--border-color);
+            border-radius: 6px;
+            border-width: 2px;
+            border-style: solid;
+
+            padding: 2px;
+            padding-left: 4px;
+            padding-right: 4px;
+
+            color: #202225;
+            font-size: medium;
+            font-weight: 600;
+
+            text-align: center;
+        }
+
+        .button:link {
+            color: var(--border-color);
+        }
+
+        .button:visited {
+            color: var(--border-color);
+        }
+
+        .button:hover {
+            color: black;
+            zoom: 110%;
+        }
+
+        .gcal {
+            margin-right: 4px;
+            background-color: #ED4245;
+        }
+
+        .ics {
+            margin-right: 4px;
+            background-color: #5865F2;
+        }
+
+        .png {
+            background-color: #FEE75C;
+        }
+
+        .credits {
+            font-weight: normal;
+            font-size: medium;
+            text-align: center;
+        }
+
+        .credits>a:link {
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .title {
+            margin-top: 0;
+            text-transform: capitalize;
+        }
+
+        @media only screen and (min-width: 768px) {
+            .main {
+                flex-direction: row;
             }
 
-            body {
-                padding: 0;
-                margin: 0;
-                display: flex;
-                font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-                font-weight: bold;
-                font-size: large;
-                background-color: var(--background);
-                color: #ffffff;
-                overflow: hidden;
-                height: 100vh;
-
-                justify-content: center;
-                align-items: center;
+            .calscontainer+.calscontainer {
+                margin-left: 10px;
+                margin-top: 0;
             }
+        }
+    </style>
+</head>
 
-            /* unvisited link */
-            a:link {
-                color: white;
-                text-decoration: none;
-            }
-
-            /* visited link */
-            a:visited {
-                color: white;
-                text-decoration: none;
-            }
-
-            /* mouse over link */
-            a:hover {
-                color: #57F287;
-            }
-
-            /* selected link */
-            a:active {
-                color: none;
-            }
-
-            table {
-                border-collapse: collapse;
-            }
-
-
-            .calscontainer {
-                background-color: #2f3136;
-                border-color: var(--border-color);
-                border-radius: 6px;
-                border-width: 2px;
-                border-style: solid;
-                padding: 40px;
-            }
-
-            .cal {
-                /* display: flex; */
-                justify-content: center;
-                align-items: center;
-            }
-
-            .cal>td {
-                border-bottom: var(--border-color) 2px solid;
-                padding-bottom: 6px;
-            }
-
-            .cal>td:not(:first-child) {
-                padding-top: 6px;
-            }
-
-            .calname {
-                margin-right: 2em;
-            }
-
-            .rowname {
-                text-align: left;
-            }
-
-            .rowlinks {
-                width: 100%;
-                height: 100%;
-                display: flex;
-                justify-content: center;
-                align-items: center;
-            }
-
-            .button {
-                border-color: var(--border-color);
-                border-radius: 6px;
-                border-width: 2px;
-                border-style: solid;
-
-                padding: 2px;
-                padding-left: 4px;
-                padding-right: 4px;
-
-                color: #202225;
-                font-size: medium;
-                font-weight: 600;
-
-                text-align: center;
-            }
-
-            .button:link {
-                color: var(--border-color);
-            }
-
-            .button:visited {
-                color: var(--border-color);
-            }
-
-            .button:hover {
-                color: black;
-                zoom: 110%;
-            }
-
-            .gcal {
-                margin-right: 4px;
-                background-color: #ED4245;
-            }
-
-            .ics {
-                margin-right: 4px;
-                background-color: #5865F2;
-            }
-
-            .png {
-                background-color: #FEE75C;
-            }
-
-            .credits {
-                font-weight: normal;
-                font-size: medium;
-                text-align: center;
-            }
-
-            .credits>a:link {
-                font-weight: bold;
-                text-decoration: underline;
-            }
-
-        </style>
-    </head>
-
-    <body>
+<body>
+    <div class="main">
+        {{range $key, $value := .Groups}}
         <div class="calscontainer">
-            <table>
-                {{range .Groupes}}
+            <h1 class="title">{{$key}}</h1>
+            <table style="margin-left: auto;margin-right: auto;">
+                {{range $value}}
                 <tr class="cal">
                     <td class="rowname">
                         <span class="calname"> <a href="{{.Name}}">{{.Name}}</a></span>
@@ -177,10 +207,11 @@
                 </tr>
                 {{end}}
             </table>
-            <p class="credits">Created and supported by <a href="https://github.com/Obito1903">@Obito1903</a></p>
-
         </div>
-    </body>
+        {{end}}
+    </div>
+    <p class="credits">Created and supported by <a href="https://github.com/Obito1903">@Obito1903</a></p>
+</body>
 
 </html>
 {{end}}

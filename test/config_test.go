@@ -9,7 +9,7 @@ import (
 func TestConfig(t *testing.T) {
 	config := config.ReadConfig("../config.json")
 	t.Log("userName: ", config.UserName, " userPassword: ", config.UserPassword, " celcatHost: ", config.CelcatHost)
-	for _, groupe := range config.Groupes {
-		t.Log("name: ", groupe.Name, " id: ", groupe.Id)
+	for _, groupe := range config.Groups {
+		t.Log("name: ", groupe, " id: ", groupe)
 	}
 }

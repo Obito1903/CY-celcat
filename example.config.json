@@ -3,10 +3,16 @@
     "userPassword": "password",
     "celcatHost": "https://celcat.somehost.com",
     "chromePath": "/usr/bin/chromium-browser",
-    "groupes": [
-        {
-            "name": "groupe1",
-            "id": "34895409"
-        }
-    ]
+    "groups": {
+        "pau": [
+            {
+                "name": "GIG1",
+                "id": "22014801"
+            },
+            {
+                "name": "GIG2",
+                "id": "22014798"
+            }
+        ]
+    }
 }
