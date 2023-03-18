@@ -191,17 +191,21 @@
             <h1 class="title">{{$key}}</h1>
             <table style="margin-left: auto;margin-right: auto;">
                 {{range $value}}
+                {{$calname := .Name}}
+                {{if ne $key "pau"}}
+                {{$calname = printf "%s-%s" $key $calname}}
+                {{end}}
                 <tr class="cal">
                     <td class="rowname">
-                        <span class="calname"> <a href="{{.Name}}">{{.Name}}</a></span>
+                        <span class="calname"> <a href="{{calname}}">{{calname}}</a></span>
                     </td>
                     <td>
                         <div class="rowlinks">
                             {{if .Gcal}}
                             <a href="{{.Gcal}}" class="button gcal">GCal</a>
                             {{end}}
-                            <a href="{{.Name}}.ics" class="button ics">ICS</a>
-                            <a href="{{.Name}}.png" class="button png">PNG</a>
+                            <a href="{{calname}}.ics" class="button ics">ICS</a>
+                            <a href="{{calname}}.png" class="button png">PNG</a>
                         </div>
                     </td>
                 </tr>
