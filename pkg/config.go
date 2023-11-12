@@ -59,6 +59,11 @@ type Config struct {
 	DefaultCampus string `json:"defaultCampus"`
 	// Allow all cors
 	AllowCORS bool `json:"allowCors"`
+
+	HA          bool   `json:"ha"`
+	Url         string `json:"url"`
+	RedisURL    string `json:"redisUrl"`
+	PuppeterUrl string `json:"puppeterUrl"`
 }
 
 type Groupe struct {
@@ -99,6 +104,11 @@ func ReadConfig(path string) Config {
 		WebPort:       "8080",
 		DefaultCampus: "pau",
 		AllowCORS:     false,
+
+		HA:          false,
+		Url:         "http://celcat",
+		RedisURL:    "http://redis",
+		PuppeterUrl: "http://renderer",
 	}
 
 	json.Unmarshal(configByte, &config)
@@ -141,6 +151,11 @@ func Configure() Config {
 	flag.BoolVar(&config.PNG, "png", config.PNG, "Enable PNG output (Require HTML output enable and Chromium on your computer).")
 	flag.IntVar(&config.PNGHeigh, "height", config.PNGHeigh, "Height of the PNG output.")
 	flag.IntVar(&config.PNGWidth, "width", config.PNGWidth, "Width of the PNG output.")
+
+	flag.BoolVar(&config.HA, "ha", config.HA, "Enable High Availability Mode (Redis + Puppeter)")
+	flag.StringVar(&config.Url, "url", config.Url, "Celcat URL")
+	flag.StringVar(&config.RedisURL, "redisUrl", config.RedisURL, "Redis URL")
+	flag.StringVar(&config.PuppeterUrl, "puppeterUrl", config.PuppeterUrl, "Puppeter URL")
 
 	flag.Parse()
 

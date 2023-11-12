@@ -1,8 +1,10 @@
 package http
 
 import (
+	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	config "github.com/Obito1903/CY-celcat/pkg"
 	"github.com/gorilla/mux"
@@ -21,7 +23,10 @@ func (serv Server) icsHandler(w http.ResponseWriter, r *http.Request) {
 
 func (serv Server) pngHandler(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	varName := vars["groupe"]
+	varName := strings.TrimSuffix(vars["groupe"], ".png")
+	if serv.config.HA {
+		http.Redirect(w, r, fmt.Sprintf("%s/screenshot?url=%s/%s&width=%d&height=%d", serv.config.PuppeterUrl, serv.config.Url, varName, serv.config.PNGWidth, serv.config.PNGHeigh), http.StatusFound)
+	}
 	http.ServeFile(w, r, serv.config.PNGPath+varName)
 }
 
